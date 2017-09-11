@@ -139,6 +139,16 @@ ActName----
 
     (after 1st end)>> add_index :act_namings, [:act_name_id, :act_namable_id], unique: true  #=> And in Model!
 
+Address----
+  $ rails g scaffold Address status street city state zip full pin
+    t.index :full, unique: true
+
+  $ rails g scaffold Addressing
+    t.references :address, index: true
+    t.references :addressable, polymorphic: true, index: true
+
+    (after 1st end)>> add_index :addressings, [:addressing_id, :addressable_id], unique: true  #=> And in Model!
+
 Phone----
   $ rails g scaffold Phone status phone
     t.index :phone, unique: true
@@ -158,16 +168,6 @@ Url----
     t.references :urlable, polymorphic: true, index: true
 
     (after 1st end)>> add_index :urlings, [:url_id, :urlable_id], unique: true  #=> And in Model!
-
-Address----
-  $ rails g scaffold Address status street city state zip full pin
-    t.index :full, unique: true
-
-  $ rails g scaffold Addressing
-    t.references :full, index: true
-    t.references :addressable, polymorphic: true, index: true
-
-    (after 1st end)>> add_index :addressings, [:addressing_id, :addressable_id], unique: true  #=> And in Model!
 
 
 ==== later ====
@@ -223,11 +223,11 @@ ActName----
 ActNum----(MAIN)
 
   -ActNum
-    has_one :act_naming, as: :act_namable
-    has_one :act_name, through: :act_naming
-
     validates :act_num, uniqueness: true
     has_many :act_numings
+
+    has_one :act_naming, as: :act_namable
+    has_one :act_name, through: :act_naming
 
     has_one :addressing, as: :addressable
     has_one :address, through: :addressing
@@ -248,19 +248,19 @@ ActNum----(MAIN)
     validates :act_numable_id, uniqueness: true
     validates :act_num_id, :uniqueness => { scope: :act_numable_id } #=> ALSO IN MIGRATION!
 
-  Address----
+Address----
 
-    -Address
-      validates :full, uniqueness: true
-      has_many :addressings
-      has_many :act_nums, through: :addressings, source: :addressable, source_type: :ActNum
+  -Address
+    validates :full, uniqueness: true
+    has_many :addressings
+    has_many :act_nums, through: :addressings, source: :addressable, source_type: :ActNum
 
-    -Addressing
-      belongs_to :addressable, polymorphic: true
-      belongs_to :address
+  -Addressing
+    belongs_to :addressable, polymorphic: true
+    belongs_to :address
 
-      validates :addressable_id, uniqueness: true
-      validates :address_id, :uniqueness => { scope: :addressable_id } #=> ALSO IN MIGRATION!
+    validates :addressable_id, uniqueness: true
+    validates :address_id, :uniqueness => { scope: :addressable_id } #=> ALSO IN MIGRATION!
 
 
 Phone----
@@ -355,27 +355,96 @@ $ rails c
 ========== Add Accounts & Phone:
 
 act_num_id = 'ac_100'
-act_num_id = 'ac_200'
-act_num_id = 'ac_300'
-act_num_id = 'ac_400'
-act_num_id = 'ac_500'
-
 act_name = 'Account 100'
-act_name = 'Account 200'
-act_name = 'Account 300'
-act_name = 'Account 400'
-act_name = 'Account 500'
+phone = '100-100-1000'
+url = 'http://www.100.com'
+full = '100 Main St, Austin, TX, 10010'
 
-phone = '888-888-8888'
-phone = '777-777-7777'
-phone = '555-555-5555'
-phone = '444-444-4444'
-phone = '333-333-3333'
+act_num_id = 'ac_200'
+act_name = 'Account 200'
+phone = '200-200-2000'
+url = 'http://www.200.com'
+full = '200 Main St, Austin, TX, 20020'
+
+act_num_id = 'ac_300'
+act_name = 'Account 300'
+phone = '300-300-3000'
+url = 'http://www.300.com'
+full = '300 Main St, Austin, TX, 30030'
+
+act_num_id = 'ac_400'
+act_name = 'Account 400'
+phone = '400-400-4000'
+url = 'http://www.400.com'
+full = '400 Main St, Austin, TX, 40040'
 
 act_num = ActNum.find_or_create_by(act_num: act_num_id)
 act_num.act_name = ActName.find_or_create_by(act_name: act_name)
-# act_num.act_names << ActName.find_or_create_by(act_name: act_name)
 act_num.phones << Phone.find_or_create_by(phone: phone)
+act_num.url = Url.find_or_create_by(url: url)
+act_num.address = Address.find_or_create_by(full: full)
+
+
+
+
+
+
+########### Testing Creating New Data ###########
+http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
+
+act_num_id = 'ac_100'
+act_name = 'Account 100'
+
+act_num = ActNum.find_or_create_by(act_num: act_num_id)
+user.profiles.build(name: "Master of Lorem Ipsum").save
+
+act_num.act_name.build(act_name: act_name).save
+act_num.act_name.act_name
+
+
+##############################
+
+user = User.first
+user.build_profile(name: "Master of Lorem Ipsum").save
+user.profile.name
+# => "Master of Lorem Ipsum"
+
+business = Business.first
+business.build_profile(name: "Taco Shell").save
+business.profile.name
+# => "Taco Shell"
+
+
+
+
+########### Eager Loading ###########
+
+act_num_id = 'ac_100'
+act_name = 'Account 100'
+act_num = ActNum.find_or_create_by(act_num: act_num_id)
+
+Post.includes(:author, { comments: { author: :gravatar } }).each do |post|
+
+
+##############################
+
+act_num = ActNum.includes(:act_name, :url, :phones, :address).where(act_num: 'ac_100')
+
+puts act_num.act_num
+puts act_name.act_name
+puts url.url
+puts phones.phone.first
+puts address.full
+
+#################
+
+act_num = ActNum.includes(:act_numable)
+
+Address.includes(:addressing)
+
+ActName.includes(:act_namings)
+
+Account.includes(:idnums, :phones).where(idnums: {crm_id: 'ac_100'}).where(phones: {phone: '(123) 456-7890'})
 
 ======================================
 
@@ -390,11 +459,25 @@ ActNuming.all
 ActName.all
 ActNaming.all
 
+Address.all
+Addressing.all
+
 Phone.all
 Phoning.all
 
+Url.all
+Urling.all
+###############
+act_num = ActNum.find_or_create_by(act_num: act_num_id)
 act_num.act_name
-Phone.last.phonable
+act_num.phones
+act_num.url
+act_num.address
+
+act_num.act_name.act_name
+act_num.phones.first.phone
+act_num.url.url
+act_num.address.full
 ======================================
 
 

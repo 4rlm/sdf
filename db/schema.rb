@@ -65,13 +65,13 @@ ActiveRecord::Schema.define(version: 20170911112349) do
   end
 
   create_table "addressings", force: :cascade do |t|
-    t.integer "full_id"
+    t.integer "address_id"
     t.string "addressable_type"
     t.integer "addressable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_addressings_on_address_id"
     t.index ["addressable_type", "addressable_id"], name: "index_addressings_on_addressable_type_and_addressable_id"
-    t.index ["full_id"], name: "index_addressings_on_full_id"
     t.index [nil, "addressable_id"], name: "index_addressings_on_addressing_id_and_addressable_id", unique: true
   end
 
