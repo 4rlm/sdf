@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @cont_num.status %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @cont_num.source %>
+</p>
+
+<p>
+  <strong>Cont num:</strong>
+  <%= @cont_num.cont_num %>
+</p>
+
+<%= link_to 'Edit', edit_cont_num_path(@cont_num) %> |
+<%= link_to 'Back', cont_nums_path %>

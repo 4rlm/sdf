@@ -1,10 +1,9 @@
 class ActNum < ApplicationRecord
+  validates :act_num, uniqueness: true
+  has_many :act_numings
 
   has_one :act_naming, as: :act_namable
   has_one :act_name, through: :act_naming
-  
-  validates :act_num, uniqueness: true
-  has_many :act_numings
 
   has_one :addressing, as: :addressable
   has_one :address, through: :addressing

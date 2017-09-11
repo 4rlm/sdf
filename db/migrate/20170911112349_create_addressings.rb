@@ -6,6 +6,6 @@ class CreateAddressings < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-    add_index :addressings, [:addressing_id, :addressable_id], unique: true  #=> And in Model!
+    add_index :addressings, [:addressing_id, :addressable_type, :addressable_id], unique: true, name: 'addressings_index' #=> And in Model!
   end
 end

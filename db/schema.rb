@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170911112349) do
+ActiveRecord::Schema.define(version: 20170911170859) do
 
   create_table "act_names", force: :cascade do |t|
     t.string "status"
@@ -72,7 +72,47 @@ ActiveRecord::Schema.define(version: 20170911112349) do
     t.datetime "updated_at", null: false
     t.index ["address_id"], name: "index_addressings_on_address_id"
     t.index ["addressable_type", "addressable_id"], name: "index_addressings_on_addressable_type_and_addressable_id"
-    t.index [nil, "addressable_id"], name: "index_addressings_on_addressing_id_and_addressable_id", unique: true
+    t.index [nil, "addressable_type", "addressable_id"], name: "addressings_index", unique: true
+  end
+
+  create_table "cont_names", force: :cascade do |t|
+    t.string "status"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "full_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["full_name"], name: "index_cont_names_on_full_name", unique: true
+  end
+
+  create_table "cont_namings", force: :cascade do |t|
+    t.integer "cont_name_id"
+    t.string "cont_namable_type"
+    t.integer "cont_namable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cont_namable_type", "cont_namable_id"], name: "index_cont_namings_on_cont_namable_type_and_cont_namable_id"
+    t.index ["cont_name_id", "cont_namable_id"], name: "index_cont_namings_on_cont_name_id_and_cont_namable_id", unique: true
+    t.index ["cont_name_id"], name: "index_cont_namings_on_cont_name_id"
+  end
+
+  create_table "cont_numings", force: :cascade do |t|
+    t.integer "cont_num_id"
+    t.string "cont_numable_type"
+    t.integer "cont_numable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cont_num_id"], name: "index_cont_numings_on_cont_num_id"
+    t.index ["cont_numable_type", "cont_numable_id"], name: "index_cont_numings_on_cont_numable_type_and_cont_numable_id"
+  end
+
+  create_table "cont_nums", force: :cascade do |t|
+    t.string "status"
+    t.string "source"
+    t.string "cont_num"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cont_num"], name: "index_cont_nums_on_cont_num", unique: true
   end
 
   create_table "phones", force: :cascade do |t|
@@ -90,7 +130,7 @@ ActiveRecord::Schema.define(version: 20170911112349) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["phonable_type", "phonable_id"], name: "index_phonings_on_phonable_type_and_phonable_id"
-    t.index ["phone_id", "phonable_id"], name: "index_phonings_on_phone_id_and_phonable_id", unique: true
+    t.index ["phone_id", "phonable_type", "phonable_id"], name: "phonings_index", unique: true
     t.index ["phone_id"], name: "index_phonings_on_phone_id"
   end
 
@@ -100,7 +140,7 @@ ActiveRecord::Schema.define(version: 20170911112349) do
     t.integer "urlable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["url_id", "urlable_id"], name: "index_urlings_on_url_id_and_urlable_id", unique: true
+    t.index ["url_id", "urlable_type", "urlable_id"], name: "urlings_index", unique: true
     t.index ["url_id"], name: "index_urlings_on_url_id"
     t.index ["urlable_type", "urlable_id"], name: "index_urlings_on_urlable_type_and_urlable_id"
   end

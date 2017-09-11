@@ -1,0 +1,17 @@
+<%= form_with(model: cont_numing, local: true) do |form| %>
+  <% if cont_numing.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(cont_numing.errors.count, "error") %> prohibited this cont_numing from being saved:</h2>
+
+      <ul>
+      <% cont_numing.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

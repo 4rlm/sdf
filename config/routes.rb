@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :cont_namings
+  resources :cont_names
+  resources :cont_numings
+  resources :cont_nums
   resources :addressings
   resources :addresses
   resources :urlings

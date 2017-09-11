@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Cont Namings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cont_namings.each do |cont_naming| %>
+      <tr>
+        <td><%= link_to 'Show', cont_naming %></td>
+        <td><%= link_to 'Edit', edit_cont_naming_path(cont_naming) %></td>
+        <td><%= link_to 'Destroy', cont_naming, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cont Naming', new_cont_naming_path %>

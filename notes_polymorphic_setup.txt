@@ -76,30 +76,6 @@ class AccountSaver
 
   def sampler
     puts "In the sampler!"
-
-    act_num_id = 'ac_100'
-    act_num_id = 'ac_200'
-    act_num_id = 'ac_300'
-    act_num_id = 'ac_400'
-    act_num_id = 'ac_500'
-
-    act_name = 'Account 100'
-    act_name = 'Account 200'
-    act_name = 'Account 300'
-    act_name = 'Account 400'
-    act_name = 'Account 500'
-
-    phone = '888-888-8888'
-    phone = '777-777-7777'
-    phone = '555-555-5555'
-    phone = '444-444-4444'
-    phone = '333-333-3333'
-
-    # act_num = ActNum.find_or_create_by(act_num: act_num_id)
-    # act_num.act_name = ActName.find_or_create_by(act_name: act_name)
-    # # act_num.act_names << ActName.find_or_create_by(act_name: act_name)
-    # act_num.phones << Phone.find_or_create_by(phone: phone)
-
   end
 
 
@@ -115,6 +91,26 @@ end
 ======================================
 6) SCAFFOLD
 ======================================
+
+
+ContNum----(MAIN)
+  $ rails g scaffold ContNum status source cont_num
+    t.index :cont_num, unique: true
+
+  $ rails g scaffold ContNuming
+    t.references :cont_num, index: true
+    t.references :cont_numable, polymorphic: true, index: true
+
+ContName----
+  $ rails g scaffold ContName status first_name last_name full_name
+    t.index :full_name, unique: true
+
+  $ rails g scaffold ContNaming
+    t.references :cont_name, index: true
+    t.references :cont_namable, polymorphic: true, index: true
+
+    (after 1st end)>> add_index :cont_namings, [:cont_name_id, :cont_namable_id], unique: true  #=> And in Model!
+
 
 ActNum----(MAIN)
   $ rails g scaffold ActNum status source act_num
@@ -147,7 +143,7 @@ Address----
     t.references :address, index: true
     t.references :addressable, polymorphic: true, index: true
 
-    (after 1st end)>> add_index :addressings, [:addressing_id, :addressable_id], unique: true  #=> And in Model!
+    (after 1st end)>> add_index :addressings, [:addressing_id, :addressable_type, :addressable_id], unique: true  #=> And in Model!
 
 Phone----
   $ rails g scaffold Phone status phone
@@ -157,7 +153,7 @@ Phone----
     t.references :phone, index: true
     t.references :phonable, polymorphic: true, index: true
 
-    (after 1st end)>> add_index :phonings, [:phone_id, :phonable_id], unique: true  #=> And in Model!
+    (after 1st end)>> add_index :phonings, [:phone_id, :phonable_type, :phonable_id], unique: true  #=> And in Model!
 
 Url----
   $ rails g scaffold Url status url
@@ -167,25 +163,7 @@ Url----
     t.references :url, index: true
     t.references :urlable, polymorphic: true, index: true
 
-    (after 1st end)>> add_index :urlings, [:url_id, :urlable_id], unique: true  #=> And in Model!
-
-
-==== later ====
-    ContNum----(MAIN)
-      $ rails g scaffold ContNum status source cont_num
-        t.index :cont_num, unique: true
-
-      $ rails g scaffold ContNuming
-        t.references :cont_num, index: true
-        t.references :cont_numable, polymorphic: true, index: true
-
-    ContName----
-      $ rails g scaffold ContName status first_name last_name full_name
-        t.index :full_name, unique: true
-
-      $ rails g scaffold ContNaming
-        t.references :full_name, index: true
-        t.references :contactable, polymorphic: true, index: true
+    (after 1st end)>> add_index :urlings, [:url_id, :urlable_type, :urlable_id], unique: true  #=> And in Model!
 
 ============
 
@@ -206,19 +184,50 @@ $ rake db:migrate
 7) MODEL CLASSES
 ======================================
 
-ActName----
+ContName----
 
-  -ActName
-    validates :act_name, uniqueness: true
-    has_many :act_namings
-    has_many :act_nums, through: :act_namings, source: :act_namable, source_type: :ActNum
+  -ContName
+    validates :full_name, uniqueness: true
 
-  -ActNaming
-    belongs_to :act_namable, polymorphic: true
-    belongs_to :act_name
+    has_many :cont_namings
+    has_many :cont_nums, through: :cont_namings, source: :cont_namable, source_type: :ContNum
 
-    validates :act_namable_id, uniqueness: true
-    validates :act_name_id, :uniqueness => { scope: :act_namable_id } #=> ALSO IN MIGRATION!
+  -ContNaming
+    belongs_to :cont_namable, polymorphic: true
+    belongs_to :cont_name
+
+    validates :cont_namable_id, uniqueness: true
+    validates :cont_name_id, :uniqueness => { scope: :cont_namable_id } #=> ALSO IN MIGRATION!
+
+ContNum----(MAIN)
+
+  -ContNum
+    validates :cont_num, uniqueness: true
+    has_many :cont_numings
+
+    has_one :cont_naming, as: :cont_namable
+    has_one :cont_name, through: :cont_naming
+
+    has_one :addressing, as: :addressable
+    has_one :address, through: :addressing
+
+    has_many :phonings, as: :phonable
+    has_many :phones, through: :phonings
+
+    has_one :urling, as: :urlable
+    has_one :url, through: :urling
+
+    # has_many :act_numings, as: :cont_numable
+    # has_many :act_nums, through: :act_numings
+
+  -ContNuming
+    belongs_to :cont_numable, polymorphic: true
+    belongs_to :cont_num
+
+    validates :cont_numable_id, uniqueness: true
+    validates :cont_num_id, :uniqueness => { scope: :cont_numable_id } #=> ALSO IN MIGRATION!
+
+###############################################
 
 ActNum----(MAIN)
 
@@ -248,6 +257,24 @@ ActNum----(MAIN)
     validates :act_numable_id, uniqueness: true
     validates :act_num_id, :uniqueness => { scope: :act_numable_id } #=> ALSO IN MIGRATION!
 
+
+
+ActName----
+
+  -ActName
+    validates :act_name, uniqueness: true
+    has_many :act_namings
+    has_many :act_nums, through: :act_namings, source: :act_namable, source_type: :ActNum
+
+  -ActNaming
+    belongs_to :act_namable, polymorphic: true
+    belongs_to :act_name
+
+    validates :act_namable_id, uniqueness: true
+    validates :act_name_id, :uniqueness => { scope: :act_namable_id } #=> ALSO IN MIGRATION!
+
+
+
 Address----
 
   -Address
@@ -260,7 +287,7 @@ Address----
     belongs_to :address
 
     validates :addressable_id, uniqueness: true
-    validates :address_id, :uniqueness => { scope: :addressable_id } #=> ALSO IN MIGRATION!
+    validates :address_id, :uniqueness => { scope: :addressable_type, :addressable_id } #=> ALSO IN MIGRATION!
 
 
 Phone----
@@ -276,7 +303,7 @@ Phone----
     belongs_to :phonable, polymorphic: true
     belongs_to :phone
 
-    validates :phone_id, :uniqueness => { scope: :phonable_id } #=> ALSO IN MIGRATION!
+    validates :phone_id, :uniqueness => { scope: :phonable_type, :phonable_id } #=> ALSO IN MIGRATION!
 
 
 Url----
@@ -291,49 +318,7 @@ Url----
     belongs_to :url
 
     validates :urlable_id, uniqueness: true
-    validates :url_id, :uniqueness => { scope: :urlable_id } #=> ALSO IN MIGRATION!
-
-==== later ====
-
-ContNum----(MAIN)
-
-  -ContNum
-    validates :cont_num, uniqueness: true
-    has_many :cont_numings
-
-    has_many :cont_names, through: :cont_numings, source: :cont_numable, source_type: :ContNames
-
-    #######
-    has_many :cont_namings, as: :cont_namable
-    has_many :cont_names, through: :cont_namings
-
-    has_many :act_numings, as: :act_numable
-    has_many :act_nums, through: :act_numings
-
-    has_many :phonings, as: :phonable
-    has_many :phones, through: :phonings
-
-    has_many :urlings, as: :urlable
-    has_many :urls, through: :urlings
-
-    has_many :addressings, as: :addressable
-    has_many :addresses, through: :addressings
-    #######
-
-  -ContNuming
-    belongs_to :cont_numable, polymorphic: true
-    belongs_to :cont_num
-
-ContName----
-
-  -ContName
-    validates :full_name, uniqueness: true
-    has_many :cont_namings
-    has_many :cont_nums, through: :cont_namings, source: :cont_namable, source_type: :ContNum
-
-  -ContNaming
-    belongs_to :cont_namable, polymorphic: true
-    belongs_to :cont_name
+    validates :url_id, :uniqueness => { scope: :urlable_type, :urlable_id } #=> ALSO IN MIGRATION!
 
 ============
 
@@ -344,7 +329,7 @@ ContName----
 
 
 ======================================
-4) Add Sample Data (VIA RAILS CONSOLE)
+4a) Add Account Data (VIA RAILS CONSOLE)
 ======================================
 
 $ rails c
@@ -352,7 +337,17 @@ $ rails c
 # require 'hirb'
 # Hirb.enable
 
-========== Add Accounts & Phone:
+========== Add Accounts:
+
+act_num_id = 'ac_100'
+phone = '200-100-1000'
+act_num = ActNum.find_or_create_by(act_num: act_num_id)
+act_num.phones << Phone.find_or_create_by(phone: phone)
+
+cont_num_id = 'cont_100'
+cont_num = ContNum.find_or_create_by(cont_num: cont_num_id)
+cont_num.phones << Phone.find_or_create_by(phone: phone)
+#####################
 
 act_num_id = 'ac_100'
 act_name = 'Account 100'
@@ -383,10 +378,6 @@ act_num.act_name = ActName.find_or_create_by(act_name: act_name)
 act_num.phones << Phone.find_or_create_by(phone: phone)
 act_num.url = Url.find_or_create_by(url: url)
 act_num.address = Address.find_or_create_by(full: full)
-
-
-
-
 
 
 ########### Testing Creating New Data ###########
@@ -449,13 +440,59 @@ Account.includes(:idnums, :phones).where(idnums: {crm_id: 'ac_100'}).where(phone
 ======================================
 
 
+
+======================================
+4b) Add Contact Data (VIA RAILS CONSOLE)
+======================================
+
+$ rails c
+
+# require 'hirb'
+# Hirb.enable
+
+========== Add Contacts:
+
+cont_num_id = 'cont_100'
+full_name = 'Contact Full Name 100'
+phone = '100-100-1000'
+url = 'http://www.100.com'
+full = '100 Main St, Austin, TX, 10010'
+
+cont_num_id = 'cont_200'
+full_name = 'Contact Full Name 200'
+phone = '200-200-2000'
+url = 'http://www.200.com'
+full = '200 Main St, Austin, TX, 20020'
+
+cont_num_id = 'cont_300'
+full_name = 'Contact Full Name 300'
+phone = '300-300-3000'
+url = 'http://www.300.com'
+full = '300 Main St, Austin, TX, 30030'
+
+cont_num_id = 'cont_400'
+full_name = 'Contact Full Name 400'
+phone = '400-400-4000'
+url = 'http://www.400.com'
+full = '400 Main St, Austin, TX, 40040'
+
+cont_num = ContNum.find_or_create_by(cont_num: cont_num_id)
+cont_num.cont_name = ContName.find_or_create_by(full_name: full_name)
+cont_num.phones << Phone.find_or_create_by(phone: phone)
+cont_num.url = Url.find_or_create_by(url: url)
+cont_num.address = Address.find_or_create_by(full: full)
+======================================
+
+
 ======================================
 5) View Data
 ======================================
+ContNum.all
+ContName.all
+ContNaming.all
+
 
 ActNum.all
-ActNuming.all
-
 ActName.all
 ActNaming.all
 
