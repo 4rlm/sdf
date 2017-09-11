@@ -206,37 +206,8 @@ $ rake db:migrate
 7) MODEL CLASSES
 ======================================
 
-ActNum----(MAIN)
-  -ActNum
-    validates :act_num, uniqueness: true
-    has_many :act_numings
-
-    has_one :act_naming, as: :act_namable
-    has_one :act_name, through: :act_naming
-
-    has_many :phonings, as: :phonable
-    has_many :phones, through: :phonings
-
-    has_one :urling, as: :urlable
-    has_one :url, through: :urling
-
-    #######
-    # has_many :cont_numings, as: :cont_numable
-    # has_many :cont_nums, through: :cont_numings
-
-    # has_one :addressing, as: :addressable
-    # has_one :address, through: :addressing
-    #######
-
-  -ActNuming
-    belongs_to :act_numable, polymorphic: true
-    belongs_to :act_num
-
-    validates :act_numable_id, uniqueness: true
-    validates :act_num_id, :uniqueness => { scope: :act_numable_id } #=> ALSO IN MIGRATION!
-
-
 ActName----
+
   -ActName
     validates :act_name, uniqueness: true
     has_many :act_namings
@@ -249,8 +220,51 @@ ActName----
     validates :act_namable_id, uniqueness: true
     validates :act_name_id, :uniqueness => { scope: :act_namable_id } #=> ALSO IN MIGRATION!
 
+ActNum----(MAIN)
+
+  -ActNum
+    has_one :act_naming, as: :act_namable
+    has_one :act_name, through: :act_naming
+
+    validates :act_num, uniqueness: true
+    has_many :act_numings
+
+    has_one :addressing, as: :addressable
+    has_one :address, through: :addressing
+
+    has_many :phonings, as: :phonable
+    has_many :phones, through: :phonings
+
+    has_one :urling, as: :urlable
+    has_one :url, through: :urling
+
+    # has_many :cont_numings, as: :cont_numable
+    # has_many :cont_nums, through: :cont_numings
+
+  -ActNuming
+    belongs_to :act_numable, polymorphic: true
+    belongs_to :act_num
+
+    validates :act_numable_id, uniqueness: true
+    validates :act_num_id, :uniqueness => { scope: :act_numable_id } #=> ALSO IN MIGRATION!
+
+  Address----
+
+    -Address
+      validates :full, uniqueness: true
+      has_many :addressings
+      has_many :act_nums, through: :addressings, source: :addressable, source_type: :ActNum
+
+    -Addressing
+      belongs_to :addressable, polymorphic: true
+      belongs_to :address
+
+      validates :addressable_id, uniqueness: true
+      validates :address_id, :uniqueness => { scope: :addressable_id } #=> ALSO IN MIGRATION!
+
 
 Phone----
+
   -Phone
     has_many :phonings
     has_many :act_nums, through: :phonings, source: :phonable, source_type: :ActNum
@@ -266,6 +280,7 @@ Phone----
 
 
 Url----
+
   -Url
     validates :url, uniqueness: true
     has_many :urlings
@@ -278,67 +293,54 @@ Url----
     validates :urlable_id, uniqueness: true
     validates :url_id, :uniqueness => { scope: :urlable_id } #=> ALSO IN MIGRATION!
 
-  Address----
-    -Address
-      validates :full, uniqueness: true
-      has_many :addressings
-      has_many :act_nums, through: :addressings, source: :addressable, source_type: :ActNum
-
-    -Addressing
-      belongs_to :addressable, polymorphic: true
-      belongs_to :address
-
-      validates :addressable_id, uniqueness: true
-      validates :address_id, :uniqueness => { scope: :addressable_id } #=> ALSO IN MIGRATION!
-
-
 ==== later ====
 
-    ContNum----(MAIN)
-      -ContNum
-        validates :cont_num, uniqueness: true
-        has_many :cont_numings
+ContNum----(MAIN)
 
-        has_many :cont_names, through: :cont_numings, source: :cont_numable, source_type: :ContNames
+  -ContNum
+    validates :cont_num, uniqueness: true
+    has_many :cont_numings
 
-        #######
-        has_many :cont_namings, as: :cont_namable
-        has_many :cont_names, through: :cont_namings
+    has_many :cont_names, through: :cont_numings, source: :cont_numable, source_type: :ContNames
 
-        has_many :act_numings, as: :act_numable
-        has_many :act_nums, through: :act_numings
+    #######
+    has_many :cont_namings, as: :cont_namable
+    has_many :cont_names, through: :cont_namings
 
-        has_many :phonings, as: :phonable
-        has_many :phones, through: :phonings
+    has_many :act_numings, as: :act_numable
+    has_many :act_nums, through: :act_numings
 
-        has_many :urlings, as: :urlable
-        has_many :urls, through: :urlings
+    has_many :phonings, as: :phonable
+    has_many :phones, through: :phonings
 
-        has_many :addressings, as: :addressable
-        has_many :addresses, through: :addressings
-        #######
+    has_many :urlings, as: :urlable
+    has_many :urls, through: :urlings
 
-      -ContNuming
-        belongs_to :cont_numable, polymorphic: true
-        belongs_to :cont_num
+    has_many :addressings, as: :addressable
+    has_many :addresses, through: :addressings
+    #######
 
-    ContName----
-      -ContName
-        validates :full_name, uniqueness: true
-        has_many :cont_namings
-        has_many :cont_nums, through: :cont_namings, source: :cont_namable, source_type: :ContNum
+  -ContNuming
+    belongs_to :cont_numable, polymorphic: true
+    belongs_to :cont_num
 
-      -ContNaming
-        belongs_to :cont_namable, polymorphic: true
-        belongs_to :cont_name
+ContName----
+
+  -ContName
+    validates :full_name, uniqueness: true
+    has_many :cont_namings
+    has_many :cont_nums, through: :cont_namings, source: :cont_namable, source_type: :ContNum
+
+  -ContNaming
+    belongs_to :cont_namable, polymorphic: true
+    belongs_to :cont_name
+
 ============
 
 ========= end ============
 
 
-
 <><>><><><><> B. SAMPLE DATA! <><>><><><><>
-
 
 
 ======================================
