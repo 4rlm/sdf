@@ -159,6 +159,16 @@ Url----
 
     (after 1st end)>> add_index :urlings, [:url_id, :urlable_id], unique: true  #=> And in Model!
 
+Address----
+  $ rails g scaffold Address status street city state zip full pin
+    t.index :full, unique: true
+
+  $ rails g scaffold Addressing
+    t.references :full, index: true
+    t.references :addressable, polymorphic: true, index: true
+
+    (after 1st end)>> add_index :addressings, [:addressing_id, :addressable_id], unique: true  #=> And in Model!
+
 
 ==== later ====
     ContNum----(MAIN)
@@ -176,17 +186,6 @@ Url----
       $ rails g scaffold ContNaming
         t.references :full_name, index: true
         t.references :contactable, polymorphic: true, index: true
-
-    Address----
-      $ rails g scaffold Address status street city state zip full pin
-        t.index :full, unique: true
-
-      $ rails g scaffold Addressing
-        t.references :full, index: true
-        t.references :addressable, polymorphic: true, index: true
-
-        (after 1st end)>> add_index :addressings, [:addressing_id, :addressable_id], unique: true  #=> And in Model!
-
 
 ============
 

@@ -1,0 +1,2 @@
+class Urling < ApplicationRecord
+end

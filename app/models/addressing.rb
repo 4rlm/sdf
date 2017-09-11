@@ -1,0 +1,2 @@
+class Addressing < ApplicationRecord
+end

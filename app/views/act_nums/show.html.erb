@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @act_num.status %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @act_num.source %>
+</p>
+
+<p>
+  <strong>Act num:</strong>
+  <%= @act_num.act_num %>
+</p>
+
+<%= link_to 'Edit', edit_act_num_path(@act_num) %> |
+<%= link_to 'Back', act_nums_path %>

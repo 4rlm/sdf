@@ -1,0 +1,2 @@
+class Phoning < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class ActNum < ApplicationRecord
+end

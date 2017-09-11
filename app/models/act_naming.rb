@@ -1,0 +1,2 @@
+class ActNaming < ApplicationRecord
+end
