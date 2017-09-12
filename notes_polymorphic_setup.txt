@@ -92,7 +92,6 @@ end
 6) SCAFFOLD
 ======================================
 
-
 ContNum----(MAIN)
   $ rails g scaffold ContNum status source cont_num
     t.index :cont_num, unique: true
