@@ -109,7 +109,8 @@ ContName----
     t.references :cont_name, index: true
     t.references :cont_namable, polymorphic: true, index: true
 
-    (after 1st end)>> add_index :cont_namings, [:cont_name_id, :cont_namable_id], unique: true  #=> And in Model!
+    (after 1st end)>>
+    add_index :cont_namings, [:cont_name_id, :cont_namable_id], unique: true  #=> And in Model!
 
 
 ActNum----(MAIN)
@@ -117,13 +118,11 @@ ActNum----(MAIN)
     t.index :act_num, unique: true
 
   $ rails g scaffold ActNuming
-    create_table :act_numings do |t|
-      t.references :act_num, index: true
-      t.references :act_numable, polymorphic: true, index: true
+    t.references :act_num, index: true
+    t.references :act_numable, polymorphic: true, index: true
 
-      t.timestamps
-    end
-    (after 1st end)>> add_index :act_numings, [:act_num_id, :act_numable_id], unique: true  #=> And in Model!
+    (after 1st end)>>
+    add_index :act_numings, [:act_num_id, :act_numable_id], unique: true  #=> And in Model!
 
 ActName----
   $ rails g scaffold ActName status act_name
@@ -133,7 +132,8 @@ ActName----
     t.references :act_name, index: true
     t.references :act_namable, polymorphic: true, index: true
 
-    (after 1st end)>> add_index :act_namings, [:act_name_id, :act_namable_id], unique: true  #=> And in Model!
+    (after 1st end)>>
+    add_index :act_namings, [:act_name_id, :act_namable_id], unique: true  #=> And in Model!
 
 Address----
   $ rails g scaffold Address status street city state zip full pin
@@ -143,7 +143,8 @@ Address----
     t.references :address, index: true
     t.references :addressable, polymorphic: true, index: true
 
-    (after 1st end)>> add_index :addressings, [:addressing_id, :addressable_type, :addressable_id], unique: true  #=> And in Model!
+    (after 1st end)>>
+    add_index :addressings, [:addressing_id, :addressable_type, :addressable_id], unique: true, name: 'addressings_index' #=> And in Model!
 
 Phone----
   $ rails g scaffold Phone status phone
@@ -153,7 +154,8 @@ Phone----
     t.references :phone, index: true
     t.references :phonable, polymorphic: true, index: true
 
-    (after 1st end)>> add_index :phonings, [:phone_id, :phonable_type, :phonable_id], unique: true  #=> And in Model!
+    (after 1st end)>>
+    add_index :phonings, [:phone_id, :phonable_type, :phonable_id], unique: true, name: 'phonings_index' #=> And in Model!  #=> And in Model!
 
 Url----
   $ rails g scaffold Url status url
@@ -163,7 +165,8 @@ Url----
     t.references :url, index: true
     t.references :urlable, polymorphic: true, index: true
 
-    (after 1st end)>> add_index :urlings, [:url_id, :urlable_type, :urlable_id], unique: true  #=> And in Model!
+    (after 1st end)>>
+    add_index :urlings, [:url_id, :urlable_type, :urlable_id], unique: true, name: 'urlings_index' #=> And in Model!  #=> And in Model!
 
 ============
 
@@ -257,8 +260,6 @@ ActNum----(MAIN)
     validates :act_numable_id, uniqueness: true
     validates :act_num_id, :uniqueness => { scope: :act_numable_id } #=> ALSO IN MIGRATION!
 
-
-
 ActName----
 
   -ActName
@@ -273,8 +274,6 @@ ActName----
     validates :act_namable_id, uniqueness: true
     validates :act_name_id, :uniqueness => { scope: :act_namable_id } #=> ALSO IN MIGRATION!
 
-
-
 Address----
 
   -Address
@@ -286,16 +285,13 @@ Address----
     belongs_to :addressable, polymorphic: true
     belongs_to :address
 
-    validates :addressable_id, uniqueness: true
-    validates :address_id, :uniqueness => { scope: :addressable_type, :addressable_id } #=> ALSO IN MIGRATION!
-
+    validates :address_id, :uniqueness => { :scope => [:addressable_type, :addressable_id] } #=> ALSO IN MIGRATION!
 
 Phone----
 
   -Phone
     has_many :phonings
     has_many :act_nums, through: :phonings, source: :phonable, source_type: :ActNum
-    # has_many :cont_nums, through: :phonings, source: :phonable, source_type: :ContNum
 
     validates :phone, uniqueness: true
 
@@ -303,8 +299,7 @@ Phone----
     belongs_to :phonable, polymorphic: true
     belongs_to :phone
 
-    validates :phone_id, :uniqueness => { scope: :phonable_type, :phonable_id } #=> ALSO IN MIGRATION!
-
+    validates :phone_id, :uniqueness => { :scope => [:phonable_type, :phonable_id] } #=> ALSO IN MIGRATION!
 
 Url----
 
@@ -317,8 +312,7 @@ Url----
     belongs_to :urlable, polymorphic: true
     belongs_to :url
 
-    validates :urlable_id, uniqueness: true
-    validates :url_id, :uniqueness => { scope: :urlable_type, :urlable_id } #=> ALSO IN MIGRATION!
+    validates :url_id, :uniqueness => { :scope => [:urlable_type, :urlable_id] } #=> ALSO IN MIGRATION!
 
 ============
 
@@ -340,13 +334,21 @@ $ rails c
 ========== Add Accounts:
 
 act_num_id = 'ac_100'
-phone = '200-100-1000'
+phone = '200-200-1000'
 act_num = ActNum.find_or_create_by(act_num: act_num_id)
 act_num.phones << Phone.find_or_create_by(phone: phone)
 
 cont_num_id = 'cont_100'
 cont_num = ContNum.find_or_create_by(cont_num: cont_num_id)
 cont_num.phones << Phone.find_or_create_by(phone: phone)
+#####################
+
+act_num_id = 'ac_100'
+act_name = 'Account 900'
+phone = '900-900-1000'
+url = 'http://www.900.com'
+full = '900 Main St, Austin, TX, 10010'
+
 #####################
 
 act_num_id = 'ac_100'
@@ -452,11 +454,22 @@ $ rails c
 
 ========== Add Contacts:
 
+########################
+
 cont_num_id = 'cont_100'
-full_name = 'Contact Full Name 100'
-phone = '100-100-1000'
-url = 'http://www.100.com'
-full = '100 Main St, Austin, TX, 10010'
+full_name = 'Contact Full Name 900'
+phone = '900-100-1000'
+url = 'http://www.900.com'
+full = '900 Main St, Austin, TX, 10010'
+
+########################
+
+
+cont_num_id = 'cont_100'
+full_name = 'Contact Full Name 800'
+phone = '800-100-1000'
+url = 'http://www.800.com'
+full = '800 Main St, Austin, TX, 10010'
 
 cont_num_id = 'cont_200'
 full_name = 'Contact Full Name 200'
