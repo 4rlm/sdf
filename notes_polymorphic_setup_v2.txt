@@ -8,7 +8,7 @@ Need to combine:
 6) SCAFFOLD
 ======================================
 Account----
-  $ rails g scaffold Account status source act_num act_name
+  $ rails g scaffold Account act_num source act_name status
     t.index :act_num, unique: true
 
   $ rails g scaffold Accounting
@@ -19,7 +19,7 @@ Account----
     add_index :accountings, [:accounting_id, :accountable_id], unique: true  #=> And in Model!
 
 Contact----
-  $ rails g scaffold Contact status source cont_num first_name last_name full_name
+  $ rails g scaffold Contact cont_num source status full_name first_name last_name
     t.index :cont_num, unique: true
 
   $ rails g scaffold Contacting
@@ -88,7 +88,7 @@ Account
     belongs_to :account
 
     validates :accountable_id, uniqueness: true
-    # validates :act_num_id, :uniqueness => { scope: :act_numable_id } #=> ALSO IN MIGRATION!
+    validates :act_num_id, :uniqueness => { scope: :act_numable_id } #=> ALSO IN MIGRATION!
 
 Contact
   -Contact
@@ -98,15 +98,15 @@ Contact
     has_many :phonings, as: :phonable
     has_many :phones, through: :phonings
 
-    # has_one :accounting, as: :accountable
-    # has_one :act_num, through: :accounting
+    has_one :accounting, as: :accountable
+    has_one :act_num, through: :accounting
 
   -Contacting
     belongs_to :contactable, polymorphic: true
     belongs_to :contact
 
     validates :contactable_id, uniqueness: true
-    # validates :cont_num_id, :uniqueness => { scope: :cont_numable_id } #=> ALSO IN MIGRATION!
+    validates :cont_num_id, :uniqueness => { scope: :cont_numable_id } #=> ALSO IN MIGRATION!
 
 
 Address
@@ -123,10 +123,9 @@ Address
 
 Phone
   -Phone
+    validates :phone, uniqueness: true
     has_many :phonings
     has_many :act_nums, through: :phonings, source: :phonable, source_type: :Account
-
-    validates :phone, uniqueness: true
 
   -Phoning
     belongs_to :phonable, polymorphic: true
@@ -148,7 +147,94 @@ Url
 
 
 
-######################## Old Below ##################
+
+
+>>>>  ################## Add Data ##################
+
+>>>> Add accounts
+act_num_raw = 'ac_100'
+act_name_raw = 'Account 100'
+phone_raw = '100-100-1000'
+url_raw = 'http://www.100.com'
+full_raw = '100 Main St, Austin, TX, 78735'
+-------------------------------
+act_num_raw = 'ac_200'
+act_name_raw = 'Account 200'
+phone_raw = '200-200-2000'
+url_raw = 'http://www.200.com'
+full_raw = '200 Main St, Austin, TX, 78735'
+-------------------------------
+act_num_raw = 'ac_300'
+act_name_raw = 'Account 300'
+phone_raw = '300-300-3000'
+url_raw = 'http://www.300.com'
+full_raw = '300 Main St, Austin, TX, 78735'
+-------------------------------
+
+act_num = Account.find_or_create_by(act_num: act_num_raw, act_name: act_name_raw)
+act_num.phones << Phone.find_or_create_by(phone: phone_raw)
+act_num.url = Url.find_or_create_by(url: url_raw)
+act_num.address = Address.find_or_create_by(full: full_raw)
+
+act_num = Account.find_by(act_num: 'ac_100')
+
+==View Data
+Account.all
+Accounting.all
+
+Phone.all
+Phoning.all
+
+Url.all
+Urling.all
+
+Address.all
+Addressing.all
+
+---------------
+
+>>>> Add Contacts
+-------------------------------
+act_num = Account.find_by(act_num: 'ac_100')
+cont_num_raw = 'con_100'
+full_name_raw = 'Contact 100'
+phone_raw = '100-100-1000'
+-------------------------------
+act_num = Account.find_by(act_num: 'ac_200')
+cont_num_raw = 'con_200'
+full_name_raw = 'Contact 200'
+phone_raw = '200-200-2000'
+-------------------------------
+act_num = Account.find_by(act_num: 'ac_300')
+cont_num_raw = 'con_300'
+full_name_raw = 'Contact 300'
+phone_raw = '300-300-3000'
+-------------------------------
+
+cont_num = Contact.find_or_create_by(cont_num: cont_num_raw, full_name: full_name_raw)
+cont_num.phones << Phone.find_or_create_by(phone: phone_raw)
+
+
+act_num = Account.find_by(act_num: 'ac_100')
+
+==View Data
+Account.all
+Accounting.all
+
+Phone.all
+Phoning.all
+
+
+
+
+
+
+
+
+
+
+
+################## Old Below ##################
 
 ==============================================
 Steps to Create Polymorphic Associations for SDF

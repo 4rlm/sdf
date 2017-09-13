@@ -1,0 +1,17 @@
+<%= form_with(model: contacting, local: true) do |form| %>
+  <% if contacting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(contacting.errors.count, "error") %> prohibited this contacting from being saved:</h2>
+
+      <ul>
+      <% contacting.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
