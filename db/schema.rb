@@ -13,13 +13,14 @@
 ActiveRecord::Schema.define(version: 20170913113834) do
 
   create_table "accountings", force: :cascade do |t|
+    t.integer "account_id"
     t.string "accountable_type"
     t.integer "accountable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_accountings_on_account_id"
     t.index ["accountable_type", "accountable_id"], name: "index_accountings_on_accountable_type_and_accountable_id"
-    t.index [nil, "accountable_id"], name: "index_accountings_on_accounting_id_and_accountable_id", unique: true
-    t.index [nil], name: "index_accountings_on_act_num", unique: true
+    t.index [nil, "accountable_type", "accountable_id"], name: "accountings_index", unique: true
   end
 
   create_table "accounts", force: :cascade do |t|

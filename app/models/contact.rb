@@ -6,5 +6,6 @@ class Contact < ApplicationRecord
   has_many :phones, through: :phonings
 
   has_one :accounting, as: :accountable
-  has_one :act_num, through: :accounting
+  has_one :account, through: :accounting
+
 end

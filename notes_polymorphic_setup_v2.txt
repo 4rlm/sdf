@@ -12,11 +12,11 @@ Account----
     t.index :act_num, unique: true
 
   $ rails g scaffold Accounting
-    t.index :act_num, unique: true
+    t.references :account, index: true
     t.references :accountable, polymorphic: true, index: true
 
     (after 1st end)>>
-    add_index :accountings, [:accounting_id, :accountable_id], unique: true  #=> And in Model!
+    add_index :accountings, [:accounting_id, :accountable_type, :accountable_id], unique: true, name: 'accountings_index' #=> And in Model!
 
 Contact----
   $ rails g scaffold Contact cont_num source status full_name first_name last_name
@@ -69,7 +69,10 @@ Url----
 Account
   -Account
     validates :act_num, uniqueness: true
+
     has_many :accountings
+    has_many :cont_nums, through: :accountings, source: :accountable, source_type: :Contact
+      #######################
 
     has_one :addressing, as: :addressable
     has_one :address, through: :addressing
@@ -80,15 +83,11 @@ Account
     has_one :urling, as: :urlable
     has_one :url, through: :urling
 
-    # has_many :contactings, as: :contactable
-    # has_many :cont_nums, through: :contactings
-
   -Accounting
     belongs_to :accountable, polymorphic: true
     belongs_to :account
 
-    validates :accountable_id, uniqueness: true
-    validates :act_num_id, :uniqueness => { scope: :act_numable_id } #=> ALSO IN MIGRATION!
+    validates :account_id, :uniqueness => { :scope => [:accountable_type, :accountable_id] } #=> ALSO IN MIGRATION!
 
 Contact
   -Contact
@@ -99,19 +98,19 @@ Contact
     has_many :phones, through: :phonings
 
     has_one :accounting, as: :accountable
-    has_one :act_num, through: :accounting
+    has_one :account, through: :accounting
 
   -Contacting
     belongs_to :contactable, polymorphic: true
     belongs_to :contact
 
     validates :contactable_id, uniqueness: true
-    validates :cont_num_id, :uniqueness => { scope: :cont_numable_id } #=> ALSO IN MIGRATION!
-
+    # validates :cont_num_id, :uniqueness => { scope: :cont_numable_id } #=> ALSO IN MIGRATION!
 
 Address
   -Address
     validates :full, uniqueness: true
+
     has_many :addressings
     has_many :act_nums, through: :addressings, source: :addressable, source_type: :Account
 
@@ -137,6 +136,7 @@ Url
   -Url
     validates :url, uniqueness: true
     has_many :urlings
+
     has_many :act_nums, through: :urlings, source: :urlable, source_type: :Account
 
   -Urling
@@ -170,7 +170,6 @@ phone_raw = '300-300-3000'
 url_raw = 'http://www.300.com'
 full_raw = '300 Main St, Austin, TX, 78735'
 -------------------------------
-
 act_num = Account.find_or_create_by(act_num: act_num_raw, act_name: act_name_raw)
 act_num.phones << Phone.find_or_create_by(phone: phone_raw)
 act_num.url = Url.find_or_create_by(url: url_raw)
@@ -214,8 +213,56 @@ phone_raw = '300-300-3000'
 cont_num = Contact.find_or_create_by(cont_num: cont_num_raw, full_name: full_name_raw)
 cont_num.phones << Phone.find_or_create_by(phone: phone_raw)
 
-
+----
+cont_num = Contact.find_by(cont_num: 'con_100')
+cont_num.account
 act_num = Account.find_by(act_num: 'ac_100')
+----
+
+++++++++++ CRAZY BEGINS ++++++++++
+rails c
+Hirb.enable
+
+-----
+act = Account.all.first
+act.cont_nums
+
+cont = Contact.all.first
+cont.account
+
+
+----- crazy...
+act_num_raw = 'ac_100'
+act_name_raw = 'Account 100'
+url_raw = 'http://www.100.com'
+full_raw = '100 Main St, Austin, TX, 78735'
+
+act_num = Account.find_or_create_by(act_num: act_num_raw, act_name: act_name_raw)
+act_num.url = Url.find_or_create_by(url: url_raw)
+act_num.address = Address.find_or_create_by(full: full_raw)
+
+cont_num_raw = 'con_100'
+full_name_raw = 'Contact 100'
+phone_raw = '100-100-1000'
+
+cont_num = Contact.find_or_create_by(cont_num: cont_num_raw, full_name: full_name_raw)
+cont_num.phones << Phone.find_or_create_by(phone: phone_raw)
+
+
+act_num.address
+act_num.cont_nums << cont_num
+act_num.cont_nums |>> no such column: accountings.account_id
+
+------ still crazy...
+
+cont_num.phones
+cont_num.account = act_num
+cont_num.account |>> no such column: accountings.account_id
+
+
++++++++++++ CRAZY ENDS +++++++++++
+
+
 
 ==View Data
 Account.all

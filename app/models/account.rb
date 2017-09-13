@@ -1,6 +1,9 @@
 class Account < ApplicationRecord
   validates :act_num, uniqueness: true
+
   has_many :accountings
+  has_many :cont_nums, through: :accountings, source: :accountable, source_type: :Contact
+    #######################
 
   has_one :addressing, as: :addressable
   has_one :address, through: :addressing
@@ -11,6 +14,4 @@ class Account < ApplicationRecord
   has_one :urling, as: :urlable
   has_one :url, through: :urling
 
-  # has_many :contactings, as: :contactable
-  # has_many :cont_nums, through: :contactings
 end
