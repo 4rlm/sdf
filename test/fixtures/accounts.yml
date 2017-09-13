@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  source: MyString
+  act_num: MyString
+  act_name: MyString
+
+two:
+  status: MyString
+  source: MyString
+  act_num: MyString
+  act_name: MyString
