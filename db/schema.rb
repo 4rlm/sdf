@@ -57,17 +57,6 @@ ActiveRecord::Schema.define(version: 20170913194055) do
     t.index [nil, "addressable_type", "addressable_id"], name: "addressings_index", unique: true
   end
 
-  create_table "contactings", force: :cascade do |t|
-    t.integer "cont_num_id"
-    t.string "contactable_type"
-    t.integer "contactable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["cont_num_id"], name: "index_contactings_on_cont_num_id"
-    t.index ["contactable_type", "contactable_id"], name: "index_contactings_on_contactable_type_and_contactable_id"
-    t.index [nil, "contactable_id"], name: "index_contactings_on_contact_id_and_contactable_id", unique: true
-  end
-
   create_table "contacts", force: :cascade do |t|
     t.string "cont_num"
     t.string "source"
@@ -75,9 +64,12 @@ ActiveRecord::Schema.define(version: 20170913194055) do
     t.string "full_name"
     t.string "first_name"
     t.string "last_name"
+    t.string "email"
+    t.string "job_title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cont_num"], name: "index_contacts_on_cont_num", unique: true
+    t.index ["full_name", "cont_num", "email", "job_title"], name: "contact_index", unique: true
   end
 
   create_table "phones", force: :cascade do |t|

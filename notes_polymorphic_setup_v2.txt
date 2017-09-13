@@ -110,15 +110,11 @@ Account----
     add_index :accountings, [:accounting_id, :accountable_type, :accountable_id], unique: true, name: 'accountings_index' #=> And in Model!
 
 Contact----
-  $ rails g scaffold Contact cont_num source status full_name first_name last_name
+  $ rails g scaffold Contact cont_num source status full_name first_name last_name email job_title
     t.index :cont_num, unique: true
 
-  $ rails g scaffold Contacting
-    t.references :cont_num, index: true
-    t.references :contactable, polymorphic: true, index: true
-
-    (after 1st end)>>
-    add_index :contactings, [:contact_id, :contactable_id], unique: true  #=> And in Model!
+  (after 1st end)>>
+  add_index :contacts, [:full_name, :cont_num, :email, :job_title], unique: true, name: 'contact_index' #=> And in Model!
 
 Address----
   $ rails g scaffold Address status street city state zip full pin
@@ -183,6 +179,9 @@ Account
 Contact
   -Contact
     validates :cont_num, uniqueness: true
+
+    validates :full_name, :uniqueness => { :scope => [:cont_num, :email, :job_title] } #=> ALSO IN MIGRATION!
+
     has_many :contactings
 
     has_many :phonings, as: :phonable
@@ -288,21 +287,51 @@ Addressing.all
 act_num = Account.find_by(act_num: 'ac_100')
 cont_num_raw = 'con_100'
 full_name_raw = 'Contact 100'
+email_raw = '100@contact.com'
+job_title_raw = 'Job 100'
 phone_raw = '100-100-1000'
 -------------------------------
 act_num = Account.find_by(act_num: 'ac_200')
 cont_num_raw = 'con_200'
 full_name_raw = 'Contact 200'
+email_raw = '200@contact.com'
+job_title_raw = 'Job 200'
 phone_raw = '200-200-2000'
 -------------------------------
 act_num = Account.find_by(act_num: 'ac_300')
 cont_num_raw = 'con_300'
 full_name_raw = 'Contact 300'
+email_raw = '300@contact.com'
+job_title_raw = 'Job 300'
 phone_raw = '300-300-3000'
 -------------------------------
+act_num = Account.find_by(act_num: 'ac_100')
+cont_num_raw = 'con_101'
+full_name_raw = 'Contact 101'
+email_raw = '101@contact.com'
+job_title_raw = 'Job 101'
+phone_raw = '100-101-1010'
+-------------------------------
+act_num = Account.find_by(act_num: 'ac_200')
+cont_num_raw = 'con_202'
+full_name_raw = 'Contact 202'
+email_raw = '202@contact.com'
+job_title_raw = 'Job 202'
+phone_raw = '202-202-2020'
+-------------------------------
+act_num = Account.find_by(act_num: 'ac_300')
+cont_num_raw = 'con_303'
+full_name_raw = 'Contact 303'
+email_raw = '303@contact.com'
+job_title_raw = 'Job 303'
+phone_raw = '303-303-3030'
 
-cont_num = Contact.find_or_create_by(cont_num: cont_num_raw, full_name: full_name_raw)
+cont_num = Contact.find_or_create_by(cont_num: cont_num_raw)
+cont_num.update_attributes(full_name: full_name_raw, email: email_raw, job_title: job_title_raw)
+
+cont_num = Contact.find_or_create_by(cont_num: cont_num_raw, full_name: full_name_raw, email: email_raw, job_title: job_title_raw)
 cont_num.phones << Phone.find_or_create_by(phone: phone_raw)
+cont_num.account = act_num
 
 ----
 cont_num = Contact.find_by(cont_num: 'con_100')

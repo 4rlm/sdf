@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   resources :phones
   resources :addressings
   resources :addresses
-  resources :contactings
   resources :contacts
   resources :accountings
   resources :accounts
