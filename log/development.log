@@ -12467,3 +12467,711 @@ Migrating to CreateContNamings (20170911170859)
   [1m[36mAddressing Load (0.4ms)[0m  [1m[34mSELECT "addressings".* FROM "addressings"[0m
   [1m[36mAddress Load (0.2ms)[0m  [1m[34mSELECT "addresses".* FROM "addresses"[0m
   [1m[36mAddressing Load (0.2ms)[0m  [1m[34mSELECT "addressings".* FROM "addressings"[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateActNums (20170911112123)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "act_nums" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "source" varchar, "act_num" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_act_nums_on_act_num" ON "act_nums" ("act_num")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911112123"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateActNumings (20170911112131)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "act_numings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "act_num_id" integer, "act_numable_type" varchar, "act_numable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_act_numings_on_act_num_id" ON "act_numings" ("act_num_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_numings_on_act_num_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_numings_on_act_num_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_act_numings_on_act_numable_type_and_act_numable_id" ON "act_numings" ("act_numable_type", "act_numable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_numings_on_act_numable_type_and_act_numable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_numings_on_act_numable_type_and_act_numable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_numings_on_act_num_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_numings_on_act_num_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_act_numings_on_act_num_id_and_act_numable_id" ON "act_numings" ("act_num_id", "act_numable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911112131"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateActNames (20170911112145)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "act_names" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "act_name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_act_names_on_act_name" ON "act_names" ("act_name")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911112145"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateActNamings (20170911112155)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "act_namings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "act_name_id" integer, "act_namable_type" varchar, "act_namable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_act_namings_on_act_name_id" ON "act_namings" ("act_name_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_namings_on_act_name_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_namings_on_act_name_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_act_namings_on_act_namable_type_and_act_namable_id" ON "act_namings" ("act_namable_type", "act_namable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_namings_on_act_namable_type_and_act_namable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_namings_on_act_namable_type_and_act_namable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_namings_on_act_name_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_namings_on_act_name_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_act_namings_on_act_name_id_and_act_namable_id" ON "act_namings" ("act_name_id", "act_namable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911112155"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePhones (20170911112206)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "phones" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "phone" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_phones_on_phone" ON "phones" ("phone")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911112206"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePhonings (20170911112217)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "phonings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "phone_id" integer, "phonable_type" varchar, "phonable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_phonings_on_phone_id" ON "phonings" ("phone_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_phonings_on_phonable_type_and_phonable_id" ON "phonings" ("phonable_type", "phonable_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "phonings_index" ON "phonings" ("phone_id", "phonable_type", "phonable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911112217"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUrls (20170911112227)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "urls" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_urls_on_url" ON "urls" ("url")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911112227"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUrlings (20170911112236)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "urlings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "url_id" integer, "urlable_type" varchar, "urlable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_urlings_on_url_id" ON "urlings" ("url_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_urlings_on_urlable_type_and_urlable_id" ON "urlings" ("urlable_type", "urlable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "urlings_index" ON "urlings" ("url_id", "urlable_type", "urlable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911112236"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAddresses (20170911112342)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "street" varchar, "city" varchar, "state" varchar, "zip" varchar, "full" varchar, "pin" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_addresses_on_full" ON "addresses" ("full")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911112342"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAddressings (20170911112349)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "addressings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "address_id" integer, "addressable_type" varchar, "addressable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_addressings_on_address_id" ON "addressings" ("address_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_addressings_on_addressable_type_and_addressable_id" ON "addressings" ("addressable_type", "addressable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "addressings_index" ON "addressings" ("addressing_id", "addressable_type", "addressable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911112349"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateContNums (20170911170830)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "cont_nums" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "source" varchar, "cont_num" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_cont_nums_on_cont_num" ON "cont_nums" ("cont_num")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911170830"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateContNumings (20170911170840)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "cont_numings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "cont_num_id" integer, "cont_numable_type" varchar, "cont_numable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_cont_numings_on_cont_num_id" ON "cont_numings" ("cont_num_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_cont_numings_on_cont_num_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_cont_numings_on_cont_num_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_cont_numings_on_cont_numable_type_and_cont_numable_id" ON "cont_numings" ("cont_numable_type", "cont_numable_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911170840"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateContNames (20170911170850)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "cont_names" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "first_name" varchar, "last_name" varchar, "full_name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_cont_names_on_full_name" ON "cont_names" ("full_name")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911170850"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateContNamings (20170911170859)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE TABLE "cont_namings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "cont_name_id" integer, "cont_namable_type" varchar, "cont_namable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_cont_namings_on_cont_name_id" ON "cont_namings" ("cont_name_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_cont_namings_on_cont_name_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_cont_namings_on_cont_name_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_cont_namings_on_cont_namable_type_and_cont_namable_id" ON "cont_namings" ("cont_namable_type", "cont_namable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_cont_namings_on_cont_namable_type_and_cont_namable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_cont_namings_on_cont_namable_type_and_cont_namable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_cont_namings_on_cont_name_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_cont_namings_on_cont_name_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_cont_namings_on_cont_name_id_and_cont_namable_id" ON "cont_namings" ("cont_name_id", "cont_namable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170911170859"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-09-12 11:01:32.555088"], ["updated_at", "2017-09-12 11:01:32.555088"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_names_on_act_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_names_on_act_name' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_namings_on_act_name_id_and_act_namable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_namings_on_act_name_id_and_act_namable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_namings_on_act_namable_type_and_act_namable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_namings_on_act_namable_type_and_act_namable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_namings_on_act_name_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_namings_on_act_name_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_numings_on_act_num_id_and_act_numable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_numings_on_act_num_id_and_act_numable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_numings_on_act_numable_type_and_act_numable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_numings_on_act_numable_type_and_act_numable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_numings_on_act_num_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_numings_on_act_num_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_act_nums_on_act_num' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_act_nums_on_act_num' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addresses_on_full' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addresses_on_full' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='addressings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='addressings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_cont_names_on_full_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_cont_names_on_full_name' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_cont_namings_on_cont_name_id_and_cont_namable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_cont_namings_on_cont_name_id_and_cont_namable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_cont_namings_on_cont_namable_type_and_cont_namable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_cont_namings_on_cont_namable_type_and_cont_namable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_cont_namings_on_cont_name_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_cont_namings_on_cont_name_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_cont_numings_on_cont_numable_type_and_cont_numable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_cont_numings_on_cont_numable_type_and_cont_numable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_cont_numings_on_cont_num_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_cont_numings_on_cont_num_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_cont_nums_on_cont_num' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_cont_nums_on_cont_num' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phones_on_phone' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phones_on_phone' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='phonings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='phonings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='urlings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='urlings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urls_on_url' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urls_on_url' AND type='index'
+[0m
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" WHERE "cont_nums"."cont_num" = ? LIMIT ?[0m  [["cont_num", "cont_100"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContNum Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "cont_nums" WHERE "cont_nums"."cont_num" = ? LIMIT ?[0m  [["cont_num", "cont_100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cont_nums" ("cont_num", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["cont_num", "cont_100"], ["created_at", "2017-09-12 11:03:29.021577"], ["updated_at", "2017-09-12 11:03:29.021577"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUrl Load (0.1ms)[0m  [1m[34mSELECT  "urls".* FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.900.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUrl Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.900.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "urls" ("url", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["url", "http://www.900.com"], ["created_at", "2017-09-12 11:03:38.091586"], ["updated_at", "2017-09-12 11:03:38.091586"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUrl Load (0.3ms)[0m  [1m[34mSELECT "urls".* FROM "urls"[0m
+  [1m[36mActNum Load (0.4ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActNum Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "act_nums" ("act_num", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["act_num", "ac_100"], ["created_at", "2017-09-12 18:23:36.630966"], ["updated_at", "2017-09-12 18:23:36.630966"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActNaming Load (0.2ms)[0m  [1m[34mSELECT  "act_namings".* FROM "act_namings" WHERE "act_namings"."act_namable_id" = ? AND "act_namings"."act_namable_type" = ? LIMIT ?[0m  [["act_namable_id", 1], ["act_namable_type", "ActNum"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[36mActName Load (0.1ms)[0m  [1m[34mSELECT  "act_names".* FROM "act_names" WHERE "act_names"."act_name" = ? LIMIT ?[0m  [["act_name", "Account 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActName Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "act_names" WHERE "act_names"."act_name" = ? LIMIT ?[0m  [["act_name", "Account 100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "act_names" ("act_name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["act_name", "Account 100"], ["created_at", "2017-09-12 18:25:13.121551"], ["updated_at", "2017-09-12 18:25:13.121551"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActNaming Load (0.1ms)[0m  [1m[34mSELECT  "act_namings".* FROM "act_namings" WHERE "act_namings"."act_namable_id" = ? AND "act_namings"."act_namable_type" = ? LIMIT ?[0m  [["act_namable_id", 1], ["act_namable_type", "ActNum"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mActNaming Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "act_namings" WHERE "act_namings"."act_namable_id" = ? LIMIT ?[0m  [["act_namable_id", 1], ["LIMIT", 1]]
+  [1m[36mActNaming Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "act_namings" WHERE "act_namings"."act_name_id" = ? AND "act_namings"."act_namable_id" = ? LIMIT ?[0m  [["act_name_id", 1], ["act_namable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "act_namings" ("act_name_id", "act_namable_type", "act_namable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["act_name_id", 1], ["act_namable_type", "ActNum"], ["act_namable_id", 1], ["created_at", "2017-09-12 18:25:13.148916"], ["updated_at", "2017-09-12 18:25:13.148916"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.1ms)[0m  [1m[34mSELECT  "phones".* FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPhone Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "phones" ("phone", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["phone", "100-100-1000"], ["created_at", "2017-09-12 18:25:13.199644"], ["updated_at", "2017-09-12 18:25:13.199644"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActNum Load (0.1ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPhoning Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "phonings" WHERE "phonings"."phone_id" = ? AND "phonings"."phonable_type" = ? AND "phonings"."phonable_id" = ? LIMIT ?[0m  [["phone_id", 1], ["phonable_type", "ActNum"], ["phonable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "phonings" ("phone_id", "phonable_type", "phonable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["phone_id", 1], ["phonable_type", "ActNum"], ["phonable_id", 1], ["created_at", "2017-09-12 18:25:13.227425"], ["updated_at", "2017-09-12 18:25:13.227425"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT "phones".* FROM "phones" INNER JOIN "phonings" ON "phones"."id" = "phonings"."phone_id" WHERE "phonings"."phonable_id" = ? AND "phonings"."phonable_type" = ?[0m  [["phonable_id", 1], ["phonable_type", "ActNum"]]
+  [1m[36mUrl Load (0.1ms)[0m  [1m[34mSELECT  "urls".* FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.100.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUrl Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.100.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "urls" ("url", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["url", "http://www.100.com"], ["created_at", "2017-09-12 18:25:13.250460"], ["updated_at", "2017-09-12 18:25:13.250460"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUrling Load (0.2ms)[0m  [1m[34mSELECT  "urlings".* FROM "urlings" WHERE "urlings"."urlable_id" = ? AND "urlings"."urlable_type" = ? LIMIT ?[0m  [["urlable_id", 1], ["urlable_type", "ActNum"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActNum Load (0.1ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUrling Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "urlings" WHERE "urlings"."url_id" = ? AND "urlings"."urlable_type" = ? AND "urlings"."urlable_id" = ? LIMIT ?[0m  [["url_id", 2], ["urlable_type", "ActNum"], ["urlable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "urlings" ("url_id", "urlable_type", "urlable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["url_id", 2], ["urlable_type", "ActNum"], ["urlable_id", 1], ["created_at", "2017-09-12 18:25:13.288675"], ["updated_at", "2017-09-12 18:25:13.288675"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddress Load (0.2ms)[0m  [1m[34mSELECT  "addresses".* FROM "addresses" WHERE "addresses"."full" = ? LIMIT ?[0m  [["full", "100 Main St, Austin, TX, 10010"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAddress Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "addresses" WHERE "addresses"."full" = ? LIMIT ?[0m  [["full", "100 Main St, Austin, TX, 10010"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "addresses" ("full", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["full", "100 Main St, Austin, TX, 10010"], ["created_at", "2017-09-12 18:25:14.009404"], ["updated_at", "2017-09-12 18:25:14.009404"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddressing Load (0.1ms)[0m  [1m[34mSELECT  "addressings".* FROM "addressings" WHERE "addressings"."addressable_id" = ? AND "addressings"."addressable_type" = ? LIMIT ?[0m  [["addressable_id", 1], ["addressable_type", "ActNum"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAddressing Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "addressings" WHERE "addressings"."address_id" = ? AND "addressings"."addressable_type" = ? AND "addressings"."addressable_id" = ? LIMIT ?[0m  [["address_id", 1], ["addressable_type", "ActNum"], ["addressable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "addressings" ("address_id", "addressable_type", "addressable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["address_id", 1], ["addressable_type", "ActNum"], ["addressable_id", 1], ["created_at", "2017-09-12 18:25:14.030868"], ["updated_at", "2017-09-12 18:25:14.030868"]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActNuming Load (0.2ms)[0m  [1m[34mSELECT "act_numings".* FROM "act_numings" WHERE "act_numings"."act_num_id" = ?[0m  [["act_num_id", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[36mActNuming Load (0.1ms)[0m  [1m[34mSELECT "act_numings".* FROM "act_numings" WHERE "act_numings"."act_num_id" = ?[0m  [["act_num_id", 1]]
+  [1m[36mContNuming Load (0.1ms)[0m  [1m[34mSELECT "cont_numings".* FROM "cont_numings" WHERE "cont_numings"."cont_numable_id" = ? AND "cont_numings"."cont_numable_type" = ?[0m  [["cont_numable_id", 1], ["cont_numable_type", "ActNum"]]
+  [1m[36mContNum Load (0.1ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" WHERE "cont_nums"."cont_num" = ? LIMIT ?[0m  [["cont_num", "cont_100"], ["LIMIT", 1]]
+  [1m[36mContName Load (0.2ms)[0m  [1m[34mSELECT  "cont_names".* FROM "cont_names" WHERE "cont_names"."full_name" = ? LIMIT ?[0m  [["full_name", "Contact Full Name 100"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContName Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "cont_names" WHERE "cont_names"."full_name" = ? LIMIT ?[0m  [["full_name", "Contact Full Name 100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cont_names" ("full_name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["full_name", "Contact Full Name 100"], ["created_at", "2017-09-12 18:31:37.292686"], ["updated_at", "2017-09-12 18:31:37.292686"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContNaming Load (0.1ms)[0m  [1m[34mSELECT  "cont_namings".* FROM "cont_namings" WHERE "cont_namings"."cont_namable_id" = ? AND "cont_namings"."cont_namable_type" = ? LIMIT ?[0m  [["cont_namable_id", 1], ["cont_namable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContNum Load (0.1ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" WHERE "cont_nums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContNaming Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "cont_namings" WHERE "cont_namings"."cont_namable_id" = ? LIMIT ?[0m  [["cont_namable_id", 1], ["LIMIT", 1]]
+  [1m[36mContNaming Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "cont_namings" WHERE "cont_namings"."cont_name_id" = ? AND "cont_namings"."cont_namable_id" = ? LIMIT ?[0m  [["cont_name_id", 1], ["cont_namable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "cont_namings" ("cont_name_id", "cont_namable_type", "cont_namable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["cont_name_id", 1], ["cont_namable_type", "ContNum"], ["cont_namable_id", 1], ["created_at", "2017-09-12 18:31:37.316578"], ["updated_at", "2017-09-12 18:31:37.316578"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT  "phones".* FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContNum Load (0.0ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" WHERE "cont_nums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPhoning Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "phonings" WHERE "phonings"."phone_id" = ? AND "phonings"."phonable_type" = ? AND "phonings"."phonable_id" = ? LIMIT ?[0m  [["phone_id", 1], ["phonable_type", "ContNum"], ["phonable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "phonings" ("phone_id", "phonable_type", "phonable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["phone_id", 1], ["phonable_type", "ContNum"], ["phonable_id", 1], ["created_at", "2017-09-12 18:31:38.072860"], ["updated_at", "2017-09-12 18:31:38.072860"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT "phones".* FROM "phones" INNER JOIN "phonings" ON "phones"."id" = "phonings"."phone_id" WHERE "phonings"."phonable_id" = ? AND "phonings"."phonable_type" = ?[0m  [["phonable_id", 1], ["phonable_type", "ContNum"]]
+  [1m[36mActNum Load (0.5ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" INNER JOIN "act_numings" ON "act_nums"."id" = "act_numings"."act_num_id" WHERE "act_numings"."cont_numable_id" = ? AND "act_numings"."cont_numable_type" = ? LIMIT ?[0m  [["cont_numable_id", 1], ["cont_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mActNuming Load (0.6ms)[0m  [1m[34mSELECT  "act_numings".* FROM "act_numings" WHERE "act_numings"."cont_numable_id" = ? AND "act_numings"."cont_numable_type" = ? LIMIT ?[0m  [["cont_numable_id", 1], ["cont_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" WHERE "cont_nums"."cont_num" = ? LIMIT ?[0m  [["cont_num", "cont_100"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[36mActNuming Load (0.4ms)[0m  [1m[34mSELECT  "act_numings".* FROM "act_numings" WHERE "act_numings"."cont_numable_id" = ? AND "act_numings"."cont_numable_type" = ? LIMIT ?[0m  [["cont_numable_id", 1], ["cont_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.1ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" ORDER BY "act_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" ORDER BY "act_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" ORDER BY "act_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT "phones".* FROM "phones" INNER JOIN "phonings" ON "phones"."id" = "phonings"."phone_id" WHERE "phonings"."phonable_id" = ? AND "phonings"."phonable_type" = ?[0m  [["phonable_id", 1], ["phonable_type", "ActNum"]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" ORDER BY "act_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" ORDER BY "act_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContNum Load (0.1ms)[0m  [1m[34mSELECT "cont_nums".* FROM "cont_nums" INNER JOIN "cont_numings" ON "cont_nums"."id" = "cont_numings"."cont_num_id" WHERE "cont_numings"."cont_numable_id" = ? AND "cont_numings"."cont_numable_type" = ?[0m  [["cont_numable_id", 1], ["cont_numable_type", "ActNum"]]
+  [1m[36mActNum Load (0.3ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" ORDER BY "act_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" ORDER BY "act_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNuming Load (0.1ms)[0m  [1m[34mSELECT "act_numings".* FROM "act_numings" WHERE "act_numings"."act_num_id" = ?[0m  [["act_num_id", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" ORDER BY "act_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" ORDER BY "act_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNaming Load (0.1ms)[0m  [1m[34mSELECT  "act_namings".* FROM "act_namings" WHERE "act_namings"."act_namable_id" = ? AND "act_namings"."act_namable_type" = ? LIMIT ?[0m  [["act_namable_id", 1], ["act_namable_type", "ActNum"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" ORDER BY "act_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActName Load (0.2ms)[0m  [1m[34mSELECT  "act_names".* FROM "act_names" INNER JOIN "act_namings" ON "act_names"."id" = "act_namings"."act_name_id" WHERE "act_namings"."act_namable_id" = ? AND "act_namings"."act_namable_type" = ? LIMIT ?[0m  [["act_namable_id", 1], ["act_namable_type", "ActNum"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" ORDER BY "act_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT "cont_nums".* FROM "cont_nums" INNER JOIN "cont_numings" ON "cont_nums"."id" = "cont_numings"."cont_num_id" WHERE "cont_numings"."cont_numable_id" = ? AND "cont_numings"."cont_numable_type" = ?[0m  [["cont_numable_id", 1], ["cont_numable_type", "ActNum"]]
+  [1m[36mContNum Load (0.3ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContName Load (0.2ms)[0m  [1m[34mSELECT  "cont_names".* FROM "cont_names" INNER JOIN "cont_namings" ON "cont_names"."id" = "cont_namings"."cont_name_id" WHERE "cont_namings"."cont_namable_id" = ? AND "cont_namings"."cont_namable_type" = ? LIMIT ?[0m  [["cont_namable_id", 1], ["cont_namable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNum Load (0.4ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" INNER JOIN "act_numings" ON "act_nums"."id" = "act_numings"."act_num_id" WHERE "act_numings"."cont_numable_id" = ? AND "act_numings"."cont_numable_type" = ? LIMIT ?[0m  [["cont_numable_id", 1], ["cont_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNuming Load (0.5ms)[0m  [1m[34mSELECT  "act_numings".* FROM "act_numings" WHERE "act_numings"."cont_numable_id" = ? AND "act_numings"."cont_numable_type" = ? LIMIT ?[0m  [["cont_numable_id", 1], ["cont_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContNum Load (0.1ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContName Load (0.1ms)[0m  [1m[34mSELECT  "cont_names".* FROM "cont_names" INNER JOIN "cont_namings" ON "cont_names"."id" = "cont_namings"."cont_name_id" WHERE "cont_namings"."cont_namable_id" = ? AND "cont_namings"."cont_namable_type" = ? LIMIT ?[0m  [["cont_namable_id", 1], ["cont_namable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNum Load (0.3ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" INNER JOIN "act_numings" ON "act_nums"."id" = "act_numings"."act_num_id" WHERE "act_numings"."cont_numable_id" = ? AND "act_numings"."cont_numable_type" = ? LIMIT ?[0m  [["cont_numable_id", 1], ["cont_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNuming Load (0.5ms)[0m  [1m[34mSELECT  "act_numings".* FROM "act_numings" WHERE "act_numings"."cont_numable_id" = ? AND "act_numings"."cont_numable_type" = ? LIMIT ?[0m  [["cont_numable_id", 1], ["cont_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContNum Load (0.1ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContName Load (0.1ms)[0m  [1m[34mSELECT  "cont_names".* FROM "cont_names" INNER JOIN "cont_namings" ON "cont_names"."id" = "cont_namings"."cont_name_id" WHERE "cont_namings"."cont_namable_id" = ? AND "cont_namings"."cont_namable_type" = ? LIMIT ?[0m  [["cont_namable_id", 1], ["cont_namable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNum Load (0.3ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" INNER JOIN "act_numings" ON "act_nums"."id" = "act_numings"."act_num_id" WHERE "act_numings"."cont_numable_id" = ? AND "act_numings"."cont_numable_type" = ? LIMIT ?[0m  [["cont_numable_id", 1], ["cont_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContNum Load (0.1ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContName Load (0.2ms)[0m  [1m[34mSELECT  "cont_names".* FROM "cont_names" INNER JOIN "cont_namings" ON "cont_names"."id" = "cont_namings"."cont_name_id" WHERE "cont_namings"."cont_namable_id" = ? AND "cont_namings"."cont_namable_type" = ? LIMIT ?[0m  [["cont_namable_id", 1], ["cont_namable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" INNER JOIN "act_numings" ON "act_nums"."id" = "act_numings"."act_num_id" WHERE "act_numings"."act_numable_id" = ? AND "act_numings"."act_numable_type" = ? LIMIT ?[0m  [["act_numable_id", 1], ["act_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" INNER JOIN "act_numings" ON "act_nums"."id" = "act_numings"."act_num_id" WHERE "act_numings"."act_numable_id" = ? AND "act_numings"."act_numable_type" = ? LIMIT ?[0m  [["act_numable_id", 1], ["act_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActNuming Load (0.2ms)[0m  [1m[34mSELECT  "act_numings".* FROM "act_numings" WHERE "act_numings"."act_numable_id" = ? AND "act_numings"."act_numable_type" = ? LIMIT ?[0m  [["act_numable_id", 1], ["act_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.3ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.4ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" WHERE "cont_nums"."cont_num" = ? LIMIT ?[0m  [["cont_num", "cont_100"], ["LIMIT", 1]]
+  [1m[36mContName Load (0.4ms)[0m  [1m[34mSELECT  "cont_names".* FROM "cont_names" WHERE "cont_names"."full_name" = ? LIMIT ?[0m  [["full_name", "Contact Full Name 100"], ["LIMIT", 1]]
+  [1m[36mContNaming Load (0.3ms)[0m  [1m[34mSELECT  "cont_namings".* FROM "cont_namings" WHERE "cont_namings"."cont_namable_id" = ? AND "cont_namings"."cont_namable_type" = ? LIMIT ?[0m  [["cont_namable_id", 1], ["cont_namable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContNum Load (0.1ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" WHERE "cont_nums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContNaming Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "cont_namings" WHERE "cont_namings"."cont_namable_id" = ? AND ("cont_namings"."id" != ?) LIMIT ?[0m  [["cont_namable_id", 1], ["id", 1], ["LIMIT", 1]]
+  [1m[36mContNaming Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "cont_namings" WHERE "cont_namings"."cont_name_id" = ? AND ("cont_namings"."id" != ?) AND "cont_namings"."cont_namable_id" = ? LIMIT ?[0m  [["cont_name_id", 1], ["id", 1], ["cont_namable_id", 1], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT  "phones".* FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContNum Load (0.1ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" WHERE "cont_nums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPhoning Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "phonings" WHERE "phonings"."phone_id" = ? AND "phonings"."phonable_type" = ? AND "phonings"."phonable_id" = ? LIMIT ?[0m  [["phone_id", 1], ["phonable_type", "ContNum"], ["phonable_id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActNuming Load (0.3ms)[0m  [1m[34mSELECT  "act_numings".* FROM "act_numings" WHERE "act_numings"."act_numable_id" = ? AND "act_numings"."act_numable_type" = ? LIMIT ?[0m  [["act_numable_id", 1], ["act_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.4ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" INNER JOIN "act_numings" ON "act_nums"."id" = "act_numings"."act_num_id" WHERE "act_numings"."act_numable_id" = ? AND "act_numings"."act_numable_type" = ? LIMIT ?[0m  [["act_numable_id", 1], ["act_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.3ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContNum Load (0.1ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" WHERE "cont_nums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mActNuming Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "act_numings" WHERE "act_numings"."act_numable_id" = ? LIMIT ?[0m  [["act_numable_id", 1], ["LIMIT", 1]]
+  [1m[36mActNuming Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "act_numings" WHERE "act_numings"."act_num_id" = ? AND "act_numings"."act_numable_id" = ? LIMIT ?[0m  [["act_num_id", 1], ["act_numable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "act_numings" ("act_num_id", "act_numable_type", "act_numable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["act_num_id", 1], ["act_numable_type", "ContNum"], ["act_numable_id", 1], ["created_at", "2017-09-12 22:26:09.138717"], ["updated_at", "2017-09-12 22:26:09.138717"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_200"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "act_numings" WHERE "act_numings"."id" = ?[0m  [["id", 1]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_200"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_300"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_400"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.3ms)[0m  [1m[34mSELECT "act_nums".* FROM "act_nums"[0m
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_200"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActNum Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_200"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "act_nums" ("act_num", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["act_num", "ac_200"], ["created_at", "2017-09-12 22:27:58.934718"], ["updated_at", "2017-09-12 22:27:58.934718"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActNuming Load (0.1ms)[0m  [1m[34mSELECT  "act_numings".* FROM "act_numings" WHERE "act_numings"."act_numable_id" = ? AND "act_numings"."act_numable_type" = ? LIMIT ?[0m  [["act_numable_id", 1], ["act_numable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContNum Load (0.1ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" WHERE "cont_nums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mActNuming Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "act_numings" WHERE "act_numings"."act_numable_id" = ? LIMIT ?[0m  [["act_numable_id", 1], ["LIMIT", 1]]
+  [1m[36mActNuming Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "act_numings" WHERE "act_numings"."act_num_id" = ? AND "act_numings"."act_numable_id" = ? LIMIT ?[0m  [["act_num_id", 2], ["act_numable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "act_numings" ("act_num_id", "act_numable_type", "act_numable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["act_num_id", 2], ["act_numable_type", "ContNum"], ["act_numable_id", 1], ["created_at", "2017-09-12 22:27:58.942022"], ["updated_at", "2017-09-12 22:27:58.942022"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_300"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActNum Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_300"], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "act_nums" ("act_num", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["act_num", "ac_300"], ["created_at", "2017-09-12 22:28:18.803938"], ["updated_at", "2017-09-12 22:28:18.803938"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActNuming Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "act_numings" WHERE "act_numings"."act_numable_id" = ? AND ("act_numings"."id" != ?) LIMIT ?[0m  [["act_numable_id", 1], ["id", 2], ["LIMIT", 1]]
+  [1m[36mActNuming Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "act_numings" WHERE "act_numings"."act_num_id" = ? AND ("act_numings"."id" != ?) AND "act_numings"."act_numable_id" = ? LIMIT ?[0m  [["act_num_id", 3], ["id", 2], ["act_numable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "act_numings" SET "act_num_id" = ?, "updated_at" = ? WHERE "act_numings"."id" = ?[0m  [["act_num_id", 3], ["updated_at", "2017-09-12 22:28:18.809926"], ["id", 2]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_300"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT "cont_nums".* FROM "cont_nums" INNER JOIN "cont_numings" ON "cont_nums"."id" = "cont_numings"."cont_num_id" WHERE "cont_numings"."cont_numable_id" = ? AND "cont_numings"."cont_numable_type" = ?[0m  [["cont_numable_id", 3], ["cont_numable_type", "ActNum"]]
+  [1m[36mContNum Load (1.1ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" WHERE "cont_nums"."cont_num" = ? LIMIT ?[0m  [["cont_num", "cont_100"], ["LIMIT", 1]]
+  [1m[36mContName Load (0.1ms)[0m  [1m[34mSELECT  "cont_names".* FROM "cont_names" WHERE "cont_names"."full_name" = ? LIMIT ?[0m  [["full_name", "Contact Full Name 100"], ["LIMIT", 1]]
+  [1m[36mContNaming Load (0.2ms)[0m  [1m[34mSELECT  "cont_namings".* FROM "cont_namings" WHERE "cont_namings"."cont_namable_id" = ? AND "cont_namings"."cont_namable_type" = ? LIMIT ?[0m  [["cont_namable_id", 1], ["cont_namable_type", "ContNum"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContNum Load (0.1ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" WHERE "cont_nums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContNaming Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "cont_namings" WHERE "cont_namings"."cont_namable_id" = ? AND ("cont_namings"."id" != ?) LIMIT ?[0m  [["cont_namable_id", 1], ["id", 1], ["LIMIT", 1]]
+  [1m[36mContNaming Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "cont_namings" WHERE "cont_namings"."cont_name_id" = ? AND ("cont_namings"."id" != ?) AND "cont_namings"."cont_namable_id" = ? LIMIT ?[0m  [["cont_name_id", 1], ["id", 1], ["cont_namable_id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.1ms)[0m  [1m[34mSELECT  "phones".* FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" WHERE "cont_nums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPhoning Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "phonings" WHERE "phonings"."phone_id" = ? AND "phonings"."phonable_type" = ? AND "phonings"."phonable_id" = ? LIMIT ?[0m  [["phone_id", 1], ["phonable_type", "ContNum"], ["phonable_id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActNum Load (0.1ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.1ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[36mContName Load (0.1ms)[0m  [1m[34mSELECT  "cont_names".* FROM "cont_names" WHERE "cont_names"."full_name" = ? LIMIT ?[0m  [["full_name", "Adam 100"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContName Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "cont_names" WHERE "cont_names"."full_name" = ? LIMIT ?[0m  [["full_name", "Adam 100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "cont_names" ("full_name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["full_name", "Adam 100"], ["created_at", "2017-09-12 23:21:58.574981"], ["updated_at", "2017-09-12 23:21:58.574981"]]
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[36mContName Load (0.1ms)[0m  [1m[34mSELECT  "cont_names".* FROM "cont_names" WHERE "cont_names"."full_name" = ? LIMIT ?[0m  [["full_name", "Adam 100"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.2ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[36mContName Load (0.1ms)[0m  [1m[34mSELECT  "cont_names".* FROM "cont_names" WHERE "cont_names"."full_name" = ? LIMIT ?[0m  [["full_name", "Adam 100"], ["LIMIT", 1]]
+  [1m[36mActNum Load (0.8ms)[0m  [1m[34mSELECT  "act_nums".* FROM "act_nums" WHERE "act_nums"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[36mContName Load (0.2ms)[0m  [1m[34mSELECT  "cont_names".* FROM "cont_names" WHERE "cont_names"."full_name" = ? LIMIT ?[0m  [["full_name", "Adam 100"], ["LIMIT", 1]]
+  [1m[36mContNum Load (0.2ms)[0m  [1m[34mSELECT "cont_nums".* FROM "cont_nums" INNER JOIN "cont_namings" ON "cont_nums"."id" = "cont_namings"."cont_namable_id" WHERE "cont_namings"."cont_name_id" = ? AND "cont_namings"."cont_namable_type" = ?[0m  [["cont_name_id", 2], ["cont_namable_type", "ContNum"]]
+  [1m[36mContNum Load (0.3ms)[0m  [1m[34mSELECT "cont_nums".* FROM "cont_nums"[0m
+  [1m[36mContNuming Load (0.3ms)[0m  [1m[34mSELECT "cont_numings".* FROM "cont_numings"[0m
+  [1m[36mContNum Load (0.4ms)[0m  [1m[34mSELECT  "cont_nums".* FROM "cont_nums" ORDER BY "cont_nums"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
