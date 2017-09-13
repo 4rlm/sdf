@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Cont Names</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cont_names.each do |cont_name| %>
+      <tr>
+        <td><%= cont_name.status %></td>
+        <td><%= cont_name.first_name %></td>
+        <td><%= cont_name.last_name %></td>
+        <td><%= link_to 'Show', cont_name %></td>
+        <td><%= link_to 'Edit', edit_cont_name_path(cont_name) %></td>
+        <td><%= link_to 'Destroy', cont_name, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cont Name', new_cont_name_path %>

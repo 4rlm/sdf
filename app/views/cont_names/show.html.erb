@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @cont_name.status %>
+</p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @cont_name.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @cont_name.last_name %>
+</p>
+
+<%= link_to 'Edit', edit_cont_name_path(@cont_name) %> |
+<%= link_to 'Back', cont_names_path %>

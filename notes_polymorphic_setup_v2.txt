@@ -1,3 +1,156 @@
+!!
+Need to combine:
+1) act_name with act_num => 'Account / Accounting / Accountable'
+2) cont_name with cont_num => 'Contact / Contacting / Contactable'
+!!
+
+======================================
+6) SCAFFOLD
+======================================
+Account----
+  $ rails g scaffold Account status source act_num act_name
+    t.index :act_num, unique: true
+
+  $ rails g scaffold Accounting
+    t.index :act_num, unique: true
+    t.references :accountable, polymorphic: true, index: true
+
+    (after 1st end)>>
+    add_index :accountings, [:accounting_id, :accountable_id], unique: true  #=> And in Model!
+
+Contact----
+  $ rails g scaffold Contact status source cont_num first_name last_name full_name
+    t.index :cont_num, unique: true
+
+  $ rails g scaffold Contacting
+    t.references :cont_num, index: true
+    t.references :contactable, polymorphic: true, index: true
+
+    (after 1st end)>>
+    add_index :contactings, [:contact_id, :contactable_id], unique: true  #=> And in Model!
+
+Address----
+  $ rails g scaffold Address status street city state zip full pin
+    t.index :full, unique: true
+
+  $ rails g scaffold Addressing
+    t.references :address, index: true
+    t.references :addressable, polymorphic: true, index: true
+
+    (after 1st end)>>
+    add_index :addressings, [:addressing_id, :addressable_type, :addressable_id], unique: true, name: 'addressings_index' #=> And in Model!
+
+Phone----
+  $ rails g scaffold Phone status phone
+    t.index :phone, unique: true
+
+  $ rails g scaffold Phoning
+    t.references :phone, index: true
+    t.references :phonable, polymorphic: true, index: true
+
+    (after 1st end)>>
+    add_index :phonings, [:phone_id, :phonable_type, :phonable_id], unique: true, name: 'phonings_index' #=> And in Model!  #=> And in Model!
+
+Url----
+  $ rails g scaffold Url status url
+    t.index :url, unique: true
+
+  $ rails g scaffold Urling
+    t.references :url, index: true
+    t.references :urlable, polymorphic: true, index: true
+
+    (after 1st end)>>
+    add_index :urlings, [:url_id, :urlable_type, :urlable_id], unique: true, name: 'urlings_index' #=> And in Model!  #=> And in Model!
+
+======================================
+7) MODEL CLASSES
+======================================
+
+Account
+  -Account
+    validates :act_num, uniqueness: true
+    has_many :accountings
+
+    has_one :addressing, as: :addressable
+    has_one :address, through: :addressing
+
+    has_many :phonings, as: :phonable
+    has_many :phones, through: :phonings
+
+    has_one :urling, as: :urlable
+    has_one :url, through: :urling
+
+    # has_many :contactings, as: :contactable
+    # has_many :cont_nums, through: :contactings
+
+  -Accounting
+    belongs_to :accountable, polymorphic: true
+    belongs_to :account
+
+    validates :accountable_id, uniqueness: true
+    # validates :act_num_id, :uniqueness => { scope: :act_numable_id } #=> ALSO IN MIGRATION!
+
+Contact
+  -Contact
+    validates :cont_num, uniqueness: true
+    has_many :contactings
+
+    has_many :phonings, as: :phonable
+    has_many :phones, through: :phonings
+
+    # has_one :accounting, as: :accountable
+    # has_one :act_num, through: :accounting
+
+  -Contacting
+    belongs_to :contactable, polymorphic: true
+    belongs_to :contact
+
+    validates :contactable_id, uniqueness: true
+    # validates :cont_num_id, :uniqueness => { scope: :cont_numable_id } #=> ALSO IN MIGRATION!
+
+
+Address
+  -Address
+    validates :full, uniqueness: true
+    has_many :addressings
+    has_many :act_nums, through: :addressings, source: :addressable, source_type: :Account
+
+  -Addressing
+    belongs_to :addressable, polymorphic: true
+    belongs_to :address
+
+    validates :address_id, :uniqueness => { :scope => [:addressable_type, :addressable_id] } #=> ALSO IN MIGRATION!
+
+Phone
+  -Phone
+    has_many :phonings
+    has_many :act_nums, through: :phonings, source: :phonable, source_type: :Account
+
+    validates :phone, uniqueness: true
+
+  -Phoning
+    belongs_to :phonable, polymorphic: true
+    belongs_to :phone
+
+    validates :phone_id, :uniqueness => { :scope => [:phonable_type, :phonable_id] } #=> ALSO IN MIGRATION!
+
+Url
+  -Url
+    validates :url, uniqueness: true
+    has_many :urlings
+    has_many :act_nums, through: :urlings, source: :urlable, source_type: :Account
+
+  -Urling
+    belongs_to :urlable, polymorphic: true
+    belongs_to :url
+
+    validates :url_id, :uniqueness => { :scope => [:urlable_type, :urlable_id] } #=> ALSO IN MIGRATION!
+
+
+
+######################## Old Below ##################
+
+==============================================
 Steps to Create Polymorphic Associations for SDF
 Accounts, Contacts, Phones, Addresses, Urls
 ======================================

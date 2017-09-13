@@ -1,0 +1,17 @@
+<%= form_with(model: act_naming, local: true) do |form| %>
+  <% if act_naming.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(act_naming.errors.count, "error") %> prohibited this act_naming from being saved:</h2>
+
+      <ul>
+      <% act_naming.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
