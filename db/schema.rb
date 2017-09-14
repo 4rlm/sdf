@@ -58,7 +58,9 @@ ActiveRecord::Schema.define(version: 20170914173000) do
     t.string "job_title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["account_id", "full_name", "email", "job_title"], name: "contact_index", unique: true
     t.index ["account_id"], name: "index_contacts_on_account_id"
+    t.index ["cont_num"], name: "index_contacts_on_cont_num", unique: true
   end
 
   create_table "phones", force: :cascade do |t|

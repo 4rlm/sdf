@@ -3682,3 +3682,1855 @@ FOREIGN KEY ("account_id")
   [1m[36mContact Load (0.4ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? ORDER BY "contacts"."id" ASC LIMIT ?[0m  [["account_id", 1], ["LIMIT", 1]]
   [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."full_name" = ? ORDER BY "contacts"."id" ASC LIMIT ?[0m  [["full_name", "Gwangbae Kim"], ["LIMIT", 1]]
   [1m[36mAccount Load (0.2ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Master of Lorem Ipsum"], ["created_at", "2017-09-14 18:28:24.344957"], ["updated_at", "2017-09-14 18:28:24.344957"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ?[0m  [["account_id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Master of Lorem Ipsum"], ["created_at", "2017-09-14 18:28:56.276641"], ["updated_at", "2017-09-14 18:28:56.276641"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAccounts (20170913193946)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "accounts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "act_num" varchar, "source" varchar, "act_name" varchar, "status" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_accounts_on_act_num" ON "accounts" ("act_num")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913193946"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAddresses (20170913194019)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "street" varchar, "city" varchar, "state" varchar, "zip" varchar, "full" varchar, "pin" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_addresses_on_full" ON "addresses" ("full")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194019"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAddressings (20170913194025)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "addressings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "address_id" integer, "addressable_type" varchar, "addressable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_addressings_on_address_id" ON "addressings" ("address_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_addressings_on_addressable_type_and_addressable_id" ON "addressings" ("addressable_type", "addressable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "addressings_index" ON "addressings" ("addressing_id", "addressable_type", "addressable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194025"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePhones (20170913194034)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "phones" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "phone" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_phones_on_phone" ON "phones" ("phone")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194034"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePhonings (20170913194041)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "phonings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "phone_id" integer, "phonable_type" varchar, "phonable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_phonings_on_phone_id" ON "phonings" ("phone_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_phonings_on_phonable_type_and_phonable_id" ON "phonings" ("phonable_type", "phonable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "phonings_index" ON "phonings" ("phone_id", "phonable_type", "phonable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194041"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUrls (20170913194049)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "urls" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_urls_on_url" ON "urls" ("url")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194049"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUrlings (20170913194055)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "urlings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "url_id" integer, "urlable_type" varchar, "urlable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_urlings_on_url_id" ON "urlings" ("url_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_urlings_on_urlable_type_and_urlable_id" ON "urlings" ("urlable_type", "urlable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "urlings_index" ON "urlings" ("url_id", "urlable_type", "urlable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194055"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateContacts (20170914173000)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "contacts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "account_id" integer, "cont_num" varchar, "source" varchar, "status" varchar, "full_name" varchar, "first_name" varchar, "last_name" varchar, "email" varchar, "job_title" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_e4cf502667"
+FOREIGN KEY ("account_id")
+  REFERENCES "accounts" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_contacts_on_account_id" ON "contacts" ("account_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_contacts_on_cont_num" ON "contacts" ("cont_num")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_cont_num' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_cont_num' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "contact_index" ON "contacts" ("account_id", "full_name", "email", "job_title")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170914173000"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-09-14 18:33:31.403947"], ["updated_at", "2017-09-14 18:33:31.403947"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_accounts_on_act_num' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_accounts_on_act_num' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addresses_on_full' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addresses_on_full' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='addressings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='addressings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='contact_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='contact_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_cont_num' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_cont_num' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phones_on_phone' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phones_on_phone' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='phonings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='phonings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='urlings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='urlings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urls_on_url' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urls_on_url' AND type='index'
+[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."act_num" = ? AND "accounts"."act_name" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["act_name", "Account 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "accounts" WHERE "accounts"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "accounts" ("act_num", "act_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["act_num", "ac_100"], ["act_name", "Account 100"], ["created_at", "2017-09-14 18:35:08.434276"], ["updated_at", "2017-09-14 18:35:08.434276"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.1ms)[0m  [1m[34mSELECT  "phones".* FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPhone Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "phones" ("phone", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["phone", "100-100-1000"], ["created_at", "2017-09-14 18:35:08.467876"], ["updated_at", "2017-09-14 18:35:08.467876"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPhoning Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "phonings" WHERE "phonings"."phone_id" = ? AND "phonings"."phonable_type" = ? AND "phonings"."phonable_id" = ? LIMIT ?[0m  [["phone_id", 1], ["phonable_type", "Account"], ["phonable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "phonings" ("phone_id", "phonable_type", "phonable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["phone_id", 1], ["phonable_type", "Account"], ["phonable_id", 1], ["created_at", "2017-09-14 18:35:08.486721"], ["updated_at", "2017-09-14 18:35:08.486721"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT "phones".* FROM "phones" INNER JOIN "phonings" ON "phones"."id" = "phonings"."phone_id" WHERE "phonings"."phonable_id" = ? AND "phonings"."phonable_type" = ?[0m  [["phonable_id", 1], ["phonable_type", "Account"]]
+  [1m[36mUrl Load (0.1ms)[0m  [1m[34mSELECT  "urls".* FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.100.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUrl Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.100.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "urls" ("url", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["url", "http://www.100.com"], ["created_at", "2017-09-14 18:35:08.511155"], ["updated_at", "2017-09-14 18:35:08.511155"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUrling Load (0.1ms)[0m  [1m[34mSELECT  "urlings".* FROM "urlings" WHERE "urlings"."urlable_id" = ? AND "urlings"."urlable_type" = ? LIMIT ?[0m  [["urlable_id", 1], ["urlable_type", "Account"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUrling Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "urlings" WHERE "urlings"."url_id" = ? AND "urlings"."urlable_type" = ? AND "urlings"."urlable_id" = ? LIMIT ?[0m  [["url_id", 1], ["urlable_type", "Account"], ["urlable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "urlings" ("url_id", "urlable_type", "urlable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["url_id", 1], ["urlable_type", "Account"], ["urlable_id", 1], ["created_at", "2017-09-14 18:35:08.532308"], ["updated_at", "2017-09-14 18:35:08.532308"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddress Load (0.2ms)[0m  [1m[34mSELECT  "addresses".* FROM "addresses" WHERE "addresses"."full" = ? LIMIT ?[0m  [["full", "100 Main St, Austin, TX, 78735"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAddress Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "addresses" WHERE "addresses"."full" = ? LIMIT ?[0m  [["full", "100 Main St, Austin, TX, 78735"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "addresses" ("full", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["full", "100 Main St, Austin, TX, 78735"], ["created_at", "2017-09-14 18:35:09.090446"], ["updated_at", "2017-09-14 18:35:09.090446"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddressing Load (0.1ms)[0m  [1m[34mSELECT  "addressings".* FROM "addressings" WHERE "addressings"."addressable_id" = ? AND "addressings"."addressable_type" = ? LIMIT ?[0m  [["addressable_id", 1], ["addressable_type", "Account"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAddressing Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "addressings" WHERE "addressings"."address_id" = ? AND "addressings"."addressable_type" = ? AND "addressings"."addressable_id" = ? LIMIT ?[0m  [["address_id", 1], ["addressable_type", "Account"], ["addressable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "addressings" ("address_id", "addressable_type", "addressable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["address_id", 1], ["addressable_type", "Account"], ["addressable_id", 1], ["created_at", "2017-09-14 18:35:09.110033"], ["updated_at", "2017-09-14 18:35:09.110033"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 100"], ["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["created_at", "2017-09-14 19:32:16.535524"], ["updated_at", "2017-09-14 19:32:16.535524"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAccount Load (0.2ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ?[0m  [["account_id", 1]]
+  [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT "contacts".* FROM "contacts"[0m
+  [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAccount Load (0.2ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT  "phones".* FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContact Load (0.1ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPhoning Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "phonings" WHERE "phonings"."phone_id" = ? AND "phonings"."phonable_type" = ? AND "phonings"."phonable_id" = ? LIMIT ?[0m  [["phone_id", 1], ["phonable_type", "Contact"], ["phonable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "phonings" ("phone_id", "phonable_type", "phonable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["phone_id", 1], ["phonable_type", "Contact"], ["phonable_id", 1], ["created_at", "2017-09-14 19:34:50.835953"], ["updated_at", "2017-09-14 19:34:50.835953"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.1ms)[0m  [1m[34mSELECT "phones".* FROM "phones" INNER JOIN "phonings" ON "phones"."id" = "phonings"."phone_id" WHERE "phonings"."phonable_id" = ? AND "phonings"."phonable_type" = ?[0m  [["phonable_id", 1], ["phonable_type", "Contact"]]
+  [1m[36mPhone Load (0.3ms)[0m  [1m[34mSELECT "phones".* FROM "phones"[0m
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT "phones".* FROM "phones" INNER JOIN "phonings" ON "phones"."id" = "phonings"."phone_id" WHERE "phonings"."phonable_id" = ? AND "phonings"."phonable_type" = ?[0m  [["phonable_id", 1], ["phonable_type", "Account"]]
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT "phones".* FROM "phones" INNER JOIN "phonings" ON "phones"."id" = "phonings"."phone_id" WHERE "phonings"."phonable_id" = ? AND "phonings"."phonable_type" = ?[0m  [["phonable_id", 1], ["phonable_type", "Account"]]
+  [1m[36mUrl Load (0.3ms)[0m  [1m[34mSELECT  "urls".* FROM "urls" INNER JOIN "urlings" ON "urls"."id" = "urlings"."url_id" WHERE "urlings"."urlable_id" = ? AND "urlings"."urlable_type" = ? LIMIT ?[0m  [["urlable_id", 1], ["urlable_type", "Account"], ["LIMIT", 1]]
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.2ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" IS NULL AND ("contacts"."id" != ?) LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND ("contacts"."id" != ?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 100"], ["id", 1], ["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "contacts" SET "source" = ?, "updated_at" = ? WHERE "contacts"."id" = ?[0m  [["source", "Web"], ["updated_at", "2017-09-14 19:37:01.770677"], ["id", 1]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContact Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" IS NULL AND ("contacts"."id" != ?) LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND ("contacts"."id" != ?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 100"], ["id", 1], ["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35mSQL (1.8ms)[0m  [1m[33mUPDATE "contacts" SET "source" = ?, "updated_at" = ? WHERE "contacts"."id" = ?[0m  [["source", "CRM"], ["updated_at", "2017-09-14 19:37:12.751880"], ["id", 1]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.4ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 200"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND "contacts"."account_id" IS NULL AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 200"], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 200"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mContact Load (0.4ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["job_title", "Job 200"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.2ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" IS NULL AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 200"], ["account_id", 1], ["full_name", "Contact 200"], ["job_title", "Job 200"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mContact Load (0.4ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" IS NULL AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["job_title", "Job 200"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.2ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" IS NULL AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 200"], ["account_id", 1], ["full_name", "Contact 200"], ["job_title", "Job 200"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.2ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 200"], ["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mContact Load (0.4ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."cont_num" = ? AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["cont_num", "1111"], ["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.2ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" = ? LIMIT ?[0m  [["cont_num", "1111"], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 200"], ["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "cont_num", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["cont_num", "1111"], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 100"], ["created_at", "2017-09-14 19:45:21.892185"], ["updated_at", "2017-09-14 19:45:21.892185"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.1ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 300"], ["email", "200@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 300"], ["account_id", 1], ["full_name", "Contact 300"], ["email", "200@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 400"], ["email", "200@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 400"], ["account_id", 1], ["full_name", "Contact 400"], ["email", "200@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT "contacts".* FROM "contacts"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAccounts (20170913193946)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "accounts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "act_num" varchar, "source" varchar, "act_name" varchar, "status" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_accounts_on_act_num" ON "accounts" ("act_num")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913193946"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAddresses (20170913194019)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "street" varchar, "city" varchar, "state" varchar, "zip" varchar, "full" varchar, "pin" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_addresses_on_full" ON "addresses" ("full")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194019"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAddressings (20170913194025)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "addressings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "address_id" integer, "addressable_type" varchar, "addressable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_addressings_on_address_id" ON "addressings" ("address_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_addressings_on_addressable_type_and_addressable_id" ON "addressings" ("addressable_type", "addressable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "addressings_index" ON "addressings" ("addressing_id", "addressable_type", "addressable_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194025"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePhones (20170913194034)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "phones" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "phone" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_phones_on_phone" ON "phones" ("phone")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194034"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePhonings (20170913194041)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "phonings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "phone_id" integer, "phonable_type" varchar, "phonable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_phonings_on_phone_id" ON "phonings" ("phone_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_phonings_on_phonable_type_and_phonable_id" ON "phonings" ("phonable_type", "phonable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "phonings_index" ON "phonings" ("phone_id", "phonable_type", "phonable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194041"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUrls (20170913194049)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "urls" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_urls_on_url" ON "urls" ("url")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194049"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUrlings (20170913194055)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "urlings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "url_id" integer, "urlable_type" varchar, "urlable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_urlings_on_url_id" ON "urlings" ("url_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_urlings_on_urlable_type_and_urlable_id" ON "urlings" ("urlable_type", "urlable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "urlings_index" ON "urlings" ("url_id", "urlable_type", "urlable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194055"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateContacts (20170914173000)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "contacts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "account_id" integer, "cont_num" varchar, "source" varchar, "status" varchar, "full_name" varchar, "first_name" varchar, "last_name" varchar, "email" varchar, "job_title" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_e4cf502667"
+FOREIGN KEY ("account_id")
+  REFERENCES "accounts" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_contacts_on_account_id" ON "contacts" ("account_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "contact_index" ON "contacts" ("account_id", "full_name", "email", "job_title")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170914173000"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-09-14 19:56:03.496584"], ["updated_at", "2017-09-14 19:56:03.496584"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_accounts_on_act_num' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_accounts_on_act_num' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addresses_on_full' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addresses_on_full' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='addressings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='addressings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='contact_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='contact_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phones_on_phone' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phones_on_phone' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='phonings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='phonings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='urlings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='urlings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urls_on_url' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urls_on_url' AND type='index'
+[0m
+  [1m[36mAccount Load (0.2ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."act_num" = ? AND "accounts"."act_name" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["act_name", "Account 100"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "accounts" WHERE "accounts"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "accounts" ("act_num", "act_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["act_num", "ac_100"], ["act_name", "Account 100"], ["created_at", "2017-09-14 19:56:54.080421"], ["updated_at", "2017-09-14 19:56:54.080421"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT  "phones".* FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPhone Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "phones" ("phone", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["phone", "100-100-1000"], ["created_at", "2017-09-14 19:56:54.115620"], ["updated_at", "2017-09-14 19:56:54.115620"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPhoning Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "phonings" WHERE "phonings"."phone_id" = ? AND "phonings"."phonable_type" = ? AND "phonings"."phonable_id" = ? LIMIT ?[0m  [["phone_id", 1], ["phonable_type", "Account"], ["phonable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "phonings" ("phone_id", "phonable_type", "phonable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["phone_id", 1], ["phonable_type", "Account"], ["phonable_id", 1], ["created_at", "2017-09-14 19:56:54.138004"], ["updated_at", "2017-09-14 19:56:54.138004"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT "phones".* FROM "phones" INNER JOIN "phonings" ON "phones"."id" = "phonings"."phone_id" WHERE "phonings"."phonable_id" = ? AND "phonings"."phonable_type" = ?[0m  [["phonable_id", 1], ["phonable_type", "Account"]]
+  [1m[36mUrl Load (0.1ms)[0m  [1m[34mSELECT  "urls".* FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.100.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUrl Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.100.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "urls" ("url", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["url", "http://www.100.com"], ["created_at", "2017-09-14 19:56:54.160320"], ["updated_at", "2017-09-14 19:56:54.160320"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUrling Load (0.2ms)[0m  [1m[34mSELECT  "urlings".* FROM "urlings" WHERE "urlings"."urlable_id" = ? AND "urlings"."urlable_type" = ? LIMIT ?[0m  [["urlable_id", 1], ["urlable_type", "Account"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUrling Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "urlings" WHERE "urlings"."url_id" = ? AND "urlings"."urlable_type" = ? AND "urlings"."urlable_id" = ? LIMIT ?[0m  [["url_id", 1], ["urlable_type", "Account"], ["urlable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "urlings" ("url_id", "urlable_type", "urlable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["url_id", 1], ["urlable_type", "Account"], ["urlable_id", 1], ["created_at", "2017-09-14 19:56:54.181717"], ["updated_at", "2017-09-14 19:56:54.181717"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddress Load (0.2ms)[0m  [1m[34mSELECT  "addresses".* FROM "addresses" WHERE "addresses"."full" = ? LIMIT ?[0m  [["full", "100 Main St, Austin, TX, 78735"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAddress Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "addresses" WHERE "addresses"."full" = ? LIMIT ?[0m  [["full", "100 Main St, Austin, TX, 78735"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "addresses" ("full", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["full", "100 Main St, Austin, TX, 78735"], ["created_at", "2017-09-14 19:56:54.510667"], ["updated_at", "2017-09-14 19:56:54.510667"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddressing Load (0.1ms)[0m  [1m[34mSELECT  "addressings".* FROM "addressings" WHERE "addressings"."addressable_id" = ? AND "addressings"."addressable_type" = ? LIMIT ?[0m  [["addressable_id", 1], ["addressable_type", "Account"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAddressing Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "addressings" WHERE "addressings"."address_id" = ? AND "addressings"."addressable_type" = ? AND "addressings"."addressable_id" = ? LIMIT ?[0m  [["address_id", 1], ["addressable_type", "Account"], ["addressable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "addressings" ("address_id", "addressable_type", "addressable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["address_id", 1], ["addressable_type", "Account"], ["addressable_id", 1], ["created_at", "2017-09-14 19:56:54.532300"], ["updated_at", "2017-09-14 19:56:54.532300"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 100"], ["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["created_at", "2017-09-14 19:57:58.487605"], ["updated_at", "2017-09-14 19:57:58.487605"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.1ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 200"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 100"], ["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 200"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAccounts (20170913193946)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "accounts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "act_num" varchar, "source" varchar, "act_name" varchar, "status" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_accounts_on_act_num" ON "accounts" ("act_num")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913193946"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAddresses (20170913194019)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "street" varchar, "city" varchar, "state" varchar, "zip" varchar, "full" varchar, "pin" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_addresses_on_full" ON "addresses" ("full")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194019"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAddressings (20170913194025)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "addressings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "address_id" integer, "addressable_type" varchar, "addressable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_addressings_on_address_id" ON "addressings" ("address_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_addressings_on_addressable_type_and_addressable_id" ON "addressings" ("addressable_type", "addressable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "addressings_index" ON "addressings" ("addressing_id", "addressable_type", "addressable_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194025"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePhones (20170913194034)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "phones" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "phone" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_phones_on_phone" ON "phones" ("phone")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194034"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePhonings (20170913194041)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "phonings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "phone_id" integer, "phonable_type" varchar, "phonable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_phonings_on_phone_id" ON "phonings" ("phone_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_phonings_on_phonable_type_and_phonable_id" ON "phonings" ("phonable_type", "phonable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "phonings_index" ON "phonings" ("phone_id", "phonable_type", "phonable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194041"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUrls (20170913194049)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "urls" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_urls_on_url" ON "urls" ("url")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194049"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUrlings (20170913194055)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "urlings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "url_id" integer, "urlable_type" varchar, "urlable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_urlings_on_url_id" ON "urlings" ("url_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_urlings_on_urlable_type_and_urlable_id" ON "urlings" ("urlable_type", "urlable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "urlings_index" ON "urlings" ("url_id", "urlable_type", "urlable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194055"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateContacts (20170914173000)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "contacts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "account_id" integer, "cont_num" varchar, "source" varchar, "status" varchar, "full_name" varchar, "first_name" varchar, "last_name" varchar, "email" varchar, "job_title" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_e4cf502667"
+FOREIGN KEY ("account_id")
+  REFERENCES "accounts" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_contacts_on_account_id" ON "contacts" ("account_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170914173000"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-09-14 19:58:52.740014"], ["updated_at", "2017-09-14 19:58:52.740014"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_accounts_on_act_num' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_accounts_on_act_num' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addresses_on_full' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addresses_on_full' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='addressings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='addressings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phones_on_phone' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phones_on_phone' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='phonings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='phonings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='urlings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='urlings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urls_on_url' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urls_on_url' AND type='index'
+[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."act_num" = ? AND "accounts"."act_name" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["act_name", "Account 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "accounts" WHERE "accounts"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "accounts" ("act_num", "act_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["act_num", "ac_100"], ["act_name", "Account 100"], ["created_at", "2017-09-14 19:59:21.792114"], ["updated_at", "2017-09-14 19:59:21.792114"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.1ms)[0m  [1m[34mSELECT  "phones".* FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPhone Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "phones" ("phone", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["phone", "100-100-1000"], ["created_at", "2017-09-14 19:59:21.822587"], ["updated_at", "2017-09-14 19:59:21.822587"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPhoning Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "phonings" WHERE "phonings"."phone_id" = ? AND "phonings"."phonable_type" = ? AND "phonings"."phonable_id" = ? LIMIT ?[0m  [["phone_id", 1], ["phonable_type", "Account"], ["phonable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "phonings" ("phone_id", "phonable_type", "phonable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["phone_id", 1], ["phonable_type", "Account"], ["phonable_id", 1], ["created_at", "2017-09-14 19:59:21.844370"], ["updated_at", "2017-09-14 19:59:21.844370"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT "phones".* FROM "phones" INNER JOIN "phonings" ON "phones"."id" = "phonings"."phone_id" WHERE "phonings"."phonable_id" = ? AND "phonings"."phonable_type" = ?[0m  [["phonable_id", 1], ["phonable_type", "Account"]]
+  [1m[36mUrl Load (0.1ms)[0m  [1m[34mSELECT  "urls".* FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.100.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUrl Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.100.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "urls" ("url", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["url", "http://www.100.com"], ["created_at", "2017-09-14 19:59:21.865947"], ["updated_at", "2017-09-14 19:59:21.865947"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUrling Load (0.1ms)[0m  [1m[34mSELECT  "urlings".* FROM "urlings" WHERE "urlings"."urlable_id" = ? AND "urlings"."urlable_type" = ? LIMIT ?[0m  [["urlable_id", 1], ["urlable_type", "Account"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUrling Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "urlings" WHERE "urlings"."url_id" = ? AND "urlings"."urlable_type" = ? AND "urlings"."urlable_id" = ? LIMIT ?[0m  [["url_id", 1], ["urlable_type", "Account"], ["urlable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "urlings" ("url_id", "urlable_type", "urlable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["url_id", 1], ["urlable_type", "Account"], ["urlable_id", 1], ["created_at", "2017-09-14 19:59:21.886808"], ["updated_at", "2017-09-14 19:59:21.886808"]]
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddress Load (0.2ms)[0m  [1m[34mSELECT  "addresses".* FROM "addresses" WHERE "addresses"."full" = ? LIMIT ?[0m  [["full", "100 Main St, Austin, TX, 78735"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAddress Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "addresses" WHERE "addresses"."full" = ? LIMIT ?[0m  [["full", "100 Main St, Austin, TX, 78735"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "addresses" ("full", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["full", "100 Main St, Austin, TX, 78735"], ["created_at", "2017-09-14 19:59:22.168835"], ["updated_at", "2017-09-14 19:59:22.168835"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddressing Load (0.2ms)[0m  [1m[34mSELECT  "addressings".* FROM "addressings" WHERE "addressings"."addressable_id" = ? AND "addressings"."addressable_type" = ? LIMIT ?[0m  [["addressable_id", 1], ["addressable_type", "Account"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAddressing Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "addressings" WHERE "addressings"."address_id" = ? AND "addressings"."addressable_type" = ? AND "addressings"."addressable_id" = ? LIMIT ?[0m  [["address_id", 1], ["addressable_type", "Account"], ["addressable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "addressings" ("address_id", "addressable_type", "addressable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["address_id", 1], ["addressable_type", "Account"], ["addressable_id", 1], ["created_at", "2017-09-14 19:59:22.187355"], ["updated_at", "2017-09-14 19:59:22.187355"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 100"], ["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["created_at", "2017-09-14 19:59:34.582329"], ["updated_at", "2017-09-14 19:59:34.582329"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 200"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."full_name" = ? AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 100"], ["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 200"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[36mContact Load (0.5ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 200"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 200"], ["created_at", "2017-09-14 20:05:04.990091"], ["updated_at", "2017-09-14 20:05:04.990091"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? AND "contacts"."cont_num" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 300"], ["cont_num", "22222"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" = ? LIMIT ?[0m  [["cont_num", "22222"], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "cont_num", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["cont_num", "22222"], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 300"], ["created_at", "2017-09-14 20:06:13.282397"], ["updated_at", "2017-09-14 20:06:13.282397"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? AND "contacts"."cont_num" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 200"], ["cont_num", "22222"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE "contacts"."cont_num" = ? LIMIT ?[0m  [["cont_num", "22222"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 300"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 300"], ["created_at", "2017-09-14 20:08:26.438050"], ["updated_at", "2017-09-14 20:08:26.438050"]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 400"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 400"], ["created_at", "2017-09-14 20:08:40.676080"], ["updated_at", "2017-09-14 20:08:40.676080"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 400"], ["LIMIT", 1]]
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 500"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.2ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 200"], ["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 500"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 500"], ["created_at", "2017-09-14 20:11:09.169619"], ["updated_at", "2017-09-14 20:11:09.169619"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 600"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 200"], ["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 600"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 600"], ["created_at", "2017-09-14 20:11:23.729769"], ["updated_at", "2017-09-14 20:11:23.729769"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 600"], ["LIMIT", 1]]
+  [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" IS NULL LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" IS NULL LIMIT ?[0m  [["full_name", "Contact 200"], ["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["created_at", "2017-09-14 20:11:52.036693"], ["updated_at", "2017-09-14 20:11:52.036693"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.5ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" IS NULL AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["job_title", "Job 600"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" IS NULL AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 200"], ["account_id", 1], ["full_name", "Contact 200"], ["job_title", "Job 600"], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 200"], ["job_title", "Job 600"], ["created_at", "2017-09-14 20:12:22.243240"], ["updated_at", "2017-09-14 20:12:22.243240"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.5ms)[0m  [1m[34mSELECT "contacts".* FROM "contacts"[0m
+  [1m[36mContact Load (0.4ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" IS NULL AND "contacts"."full_name" = ? AND "contacts"."email" IS NULL AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 300"], ["job_title", "Job 700"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" IS NULL AND "contacts"."full_name" = ? AND "contacts"."email" IS NULL AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 300"], ["full_name", "Contact 300"], ["job_title", "Job 700"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 400"], ["email", "www.400.com"], ["job_title", "Job 700"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 400"], ["account_id", 1], ["full_name", "Contact 400"], ["email", "www.400.com"], ["job_title", "Job 700"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 400"], ["email", "www.400.com"], ["job_title", "Job 700"], ["created_at", "2017-09-14 20:17:31.702325"], ["updated_at", "2017-09-14 20:17:31.702325"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" IS NULL AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["email", "www.800.com"], ["job_title", "Job 800"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAccounts (20170913193946)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "accounts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "act_num" varchar, "source" varchar, "act_name" varchar, "status" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_accounts_on_act_num" ON "accounts" ("act_num")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913193946"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAddresses (20170913194019)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "street" varchar, "city" varchar, "state" varchar, "zip" varchar, "full" varchar, "pin" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_addresses_on_full" ON "addresses" ("full")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194019"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAddressings (20170913194025)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "addressings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "address_id" integer, "addressable_type" varchar, "addressable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_addressings_on_address_id" ON "addressings" ("address_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_addressings_on_addressable_type_and_addressable_id" ON "addressings" ("addressable_type", "addressable_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "addressings_index" ON "addressings" ("addressing_id", "addressable_type", "addressable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194025"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePhones (20170913194034)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "phones" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "phone" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_phones_on_phone" ON "phones" ("phone")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194034"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePhonings (20170913194041)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "phonings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "phone_id" integer, "phonable_type" varchar, "phonable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_phonings_on_phone_id" ON "phonings" ("phone_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_phonings_on_phonable_type_and_phonable_id" ON "phonings" ("phonable_type", "phonable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "phonings_index" ON "phonings" ("phone_id", "phonable_type", "phonable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194041"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUrls (20170913194049)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "urls" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_urls_on_url" ON "urls" ("url")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194049"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUrlings (20170913194055)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "urlings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "url_id" integer, "urlable_type" varchar, "urlable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_urlings_on_url_id" ON "urlings" ("url_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_urlings_on_urlable_type_and_urlable_id" ON "urlings" ("urlable_type", "urlable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "urlings_index" ON "urlings" ("url_id", "urlable_type", "urlable_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194055"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateContacts (20170914173000)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "contacts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "account_id" integer, "cont_num" varchar, "source" varchar, "status" varchar, "full_name" varchar, "first_name" varchar, "last_name" varchar, "email" varchar, "job_title" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_e4cf502667"
+FOREIGN KEY ("account_id")
+  REFERENCES "accounts" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_contacts_on_account_id" ON "contacts" ("account_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_contacts_on_cont_num" ON "contacts" ("cont_num")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170914173000"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-09-14 20:27:15.991429"], ["updated_at", "2017-09-14 20:27:15.991429"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_accounts_on_act_num' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_accounts_on_act_num' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addresses_on_full' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addresses_on_full' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='addressings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='addressings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_cont_num' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_cont_num' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phones_on_phone' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phones_on_phone' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='phonings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='phonings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='urlings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='urlings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urls_on_url' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urls_on_url' AND type='index'
+[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."act_num" = ? AND "accounts"."act_name" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["act_name", "Account 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "accounts" WHERE "accounts"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "accounts" ("act_num", "act_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["act_num", "ac_100"], ["act_name", "Account 100"], ["created_at", "2017-09-14 20:27:51.607553"], ["updated_at", "2017-09-14 20:27:51.607553"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.1ms)[0m  [1m[34mSELECT  "phones".* FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPhone Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "phones" ("phone", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["phone", "100-100-1000"], ["created_at", "2017-09-14 20:27:51.652026"], ["updated_at", "2017-09-14 20:27:51.652026"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPhoning Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "phonings" WHERE "phonings"."phone_id" = ? AND "phonings"."phonable_type" = ? AND "phonings"."phonable_id" = ? LIMIT ?[0m  [["phone_id", 1], ["phonable_type", "Account"], ["phonable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "phonings" ("phone_id", "phonable_type", "phonable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["phone_id", 1], ["phonable_type", "Account"], ["phonable_id", 1], ["created_at", "2017-09-14 20:27:51.673446"], ["updated_at", "2017-09-14 20:27:51.673446"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT "phones".* FROM "phones" INNER JOIN "phonings" ON "phones"."id" = "phonings"."phone_id" WHERE "phonings"."phonable_id" = ? AND "phonings"."phonable_type" = ?[0m  [["phonable_id", 1], ["phonable_type", "Account"]]
+  [1m[36mUrl Load (0.1ms)[0m  [1m[34mSELECT  "urls".* FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.100.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUrl Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.100.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "urls" ("url", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["url", "http://www.100.com"], ["created_at", "2017-09-14 20:27:51.701697"], ["updated_at", "2017-09-14 20:27:51.701697"]]
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUrling Load (0.2ms)[0m  [1m[34mSELECT  "urlings".* FROM "urlings" WHERE "urlings"."urlable_id" = ? AND "urlings"."urlable_type" = ? LIMIT ?[0m  [["urlable_id", 1], ["urlable_type", "Account"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUrling Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "urlings" WHERE "urlings"."url_id" = ? AND "urlings"."urlable_type" = ? AND "urlings"."urlable_id" = ? LIMIT ?[0m  [["url_id", 1], ["urlable_type", "Account"], ["urlable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "urlings" ("url_id", "urlable_type", "urlable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["url_id", 1], ["urlable_type", "Account"], ["urlable_id", 1], ["created_at", "2017-09-14 20:27:51.724644"], ["updated_at", "2017-09-14 20:27:51.724644"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddress Load (0.3ms)[0m  [1m[34mSELECT  "addresses".* FROM "addresses" WHERE "addresses"."full" = ? LIMIT ?[0m  [["full", "100 Main St, Austin, TX, 78735"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAddress Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "addresses" WHERE "addresses"."full" = ? LIMIT ?[0m  [["full", "100 Main St, Austin, TX, 78735"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "addresses" ("full", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["full", "100 Main St, Austin, TX, 78735"], ["created_at", "2017-09-14 20:27:52.278127"], ["updated_at", "2017-09-14 20:27:52.278127"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddressing Load (0.1ms)[0m  [1m[34mSELECT  "addressings".* FROM "addressings" WHERE "addressings"."addressable_id" = ? AND "addressings"."addressable_type" = ? LIMIT ?[0m  [["addressable_id", 1], ["addressable_type", "Account"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAddressing Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "addressings" WHERE "addressings"."address_id" = ? AND "addressings"."addressable_type" = ? AND "addressings"."addressable_id" = ? LIMIT ?[0m  [["address_id", 1], ["addressable_type", "Account"], ["addressable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "addressings" ("address_id", "addressable_type", "addressable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["address_id", 1], ["addressable_type", "Account"], ["addressable_id", 1], ["created_at", "2017-09-14 20:27:52.297469"], ["updated_at", "2017-09-14 20:27:52.297469"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.1ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 100"], ["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["created_at", "2017-09-14 20:28:28.780094"], ["updated_at", "2017-09-14 20:28:28.780094"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 200"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 200"], ["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 200"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["job_title", "Job 200"], ["created_at", "2017-09-14 20:28:52.950212"], ["updated_at", "2017-09-14 20:28:52.950212"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" IS NULL AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["email", "www.800.com"], ["job_title", "Job 800"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mContact Load (0.4ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" IS NULL LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" IS NULL LIMIT ?[0m  [["full_name", "Contact 200"], ["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["created_at", "2017-09-14 20:29:36.905461"], ["updated_at", "2017-09-14 20:29:36.905461"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAccounts (20170913193946)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "accounts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "act_num" varchar, "source" varchar, "act_name" varchar, "status" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_accounts_on_act_num" ON "accounts" ("act_num")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913193946"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAddresses (20170913194019)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "street" varchar, "city" varchar, "state" varchar, "zip" varchar, "full" varchar, "pin" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_addresses_on_full" ON "addresses" ("full")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194019"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAddressings (20170913194025)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "addressings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "address_id" integer, "addressable_type" varchar, "addressable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_addressings_on_address_id" ON "addressings" ("address_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_addressings_on_addressable_type_and_addressable_id" ON "addressings" ("addressable_type", "addressable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "addressings_index" ON "addressings" ("addressing_id", "addressable_type", "addressable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194025"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePhones (20170913194034)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "phones" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "phone" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_phones_on_phone" ON "phones" ("phone")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194034"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePhonings (20170913194041)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "phonings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "phone_id" integer, "phonable_type" varchar, "phonable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_phonings_on_phone_id" ON "phonings" ("phone_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_phonings_on_phonable_type_and_phonable_id" ON "phonings" ("phonable_type", "phonable_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "phonings_index" ON "phonings" ("phone_id", "phonable_type", "phonable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194041"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUrls (20170913194049)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "urls" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "status" varchar, "url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_urls_on_url" ON "urls" ("url")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194049"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUrlings (20170913194055)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "urlings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "url_id" integer, "urlable_type" varchar, "urlable_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_urlings_on_url_id" ON "urlings" ("url_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_urlings_on_urlable_type_and_urlable_id" ON "urlings" ("urlable_type", "urlable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "urlings_index" ON "urlings" ("url_id", "urlable_type", "urlable_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170913194055"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateContacts (20170914173000)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "contacts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "account_id" integer, "cont_num" varchar, "source" varchar, "status" varchar, "full_name" varchar, "first_name" varchar, "last_name" varchar, "email" varchar, "job_title" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_e4cf502667"
+FOREIGN KEY ("account_id")
+  REFERENCES "accounts" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_contacts_on_account_id" ON "contacts" ("account_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_contacts_on_cont_num" ON "contacts" ("cont_num")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_cont_num' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_cont_num' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "contact_index" ON "contacts" ("account_id", "full_name", "email", "job_title")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170914173000"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-09-14 20:30:30.190844"], ["updated_at", "2017-09-14 20:30:30.190844"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_accounts_on_act_num' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_accounts_on_act_num' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addresses_on_full' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addresses_on_full' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='addressings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='addressings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_addressable_type_and_addressable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_addressings_on_address_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='contact_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='contact_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_cont_num' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_cont_num' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contacts_on_account_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phones_on_phone' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phones_on_phone' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='phonings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='phonings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phonable_type_and_phonable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_phonings_on_phone_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='urlings_index' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='urlings_index' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_urlable_type_and_urlable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urlings_on_url_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_urls_on_url' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_urls_on_url' AND type='index'
+[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 100"], ["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT "contacts".* FROM "contacts"[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.2ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 100"], ["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mAccount Load (0.3ms)[0m  [1m[34mSELECT "accounts".* FROM "accounts"[0m
+  [1m[36mAccount Load (0.3ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[36mAccount Load (0.3ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."act_num" = ? AND "accounts"."act_name" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["act_name", "Account 100"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "accounts" WHERE "accounts"."act_num" = ? LIMIT ?[0m  [["act_num", "ac_100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "accounts" ("act_num", "act_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["act_num", "ac_100"], ["act_name", "Account 100"], ["created_at", "2017-09-14 20:39:00.725140"], ["updated_at", "2017-09-14 20:39:00.725140"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.1ms)[0m  [1m[34mSELECT  "phones".* FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPhone Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "phones" WHERE "phones"."phone" = ? LIMIT ?[0m  [["phone", "100-100-1000"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "phones" ("phone", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["phone", "100-100-1000"], ["created_at", "2017-09-14 20:39:00.753350"], ["updated_at", "2017-09-14 20:39:00.753350"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPhoning Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "phonings" WHERE "phonings"."phone_id" = ? AND "phonings"."phonable_type" = ? AND "phonings"."phonable_id" = ? LIMIT ?[0m  [["phone_id", 1], ["phonable_type", "Account"], ["phonable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "phonings" ("phone_id", "phonable_type", "phonable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["phone_id", 1], ["phonable_type", "Account"], ["phonable_id", 1], ["created_at", "2017-09-14 20:39:00.770329"], ["updated_at", "2017-09-14 20:39:00.770329"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPhone Load (0.2ms)[0m  [1m[34mSELECT "phones".* FROM "phones" INNER JOIN "phonings" ON "phones"."id" = "phonings"."phone_id" WHERE "phonings"."phonable_id" = ? AND "phonings"."phonable_type" = ?[0m  [["phonable_id", 1], ["phonable_type", "Account"]]
+  [1m[36mUrl Load (0.1ms)[0m  [1m[34mSELECT  "urls".* FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.100.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUrl Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "urls" WHERE "urls"."url" = ? LIMIT ?[0m  [["url", "http://www.100.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "urls" ("url", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["url", "http://www.100.com"], ["created_at", "2017-09-14 20:39:00.789219"], ["updated_at", "2017-09-14 20:39:00.789219"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUrling Load (0.1ms)[0m  [1m[34mSELECT  "urlings".* FROM "urlings" WHERE "urlings"."urlable_id" = ? AND "urlings"."urlable_type" = ? LIMIT ?[0m  [["urlable_id", 1], ["urlable_type", "Account"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUrling Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "urlings" WHERE "urlings"."url_id" = ? AND "urlings"."urlable_type" = ? AND "urlings"."urlable_id" = ? LIMIT ?[0m  [["url_id", 1], ["urlable_type", "Account"], ["urlable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "urlings" ("url_id", "urlable_type", "urlable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["url_id", 1], ["urlable_type", "Account"], ["urlable_id", 1], ["created_at", "2017-09-14 20:39:00.808301"], ["updated_at", "2017-09-14 20:39:00.808301"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddress Load (0.3ms)[0m  [1m[34mSELECT  "addresses".* FROM "addresses" WHERE "addresses"."full" = ? LIMIT ?[0m  [["full", "100 Main St, Austin, TX, 78735"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAddress Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "addresses" WHERE "addresses"."full" = ? LIMIT ?[0m  [["full", "100 Main St, Austin, TX, 78735"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "addresses" ("full", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["full", "100 Main St, Austin, TX, 78735"], ["created_at", "2017-09-14 20:39:01.568637"], ["updated_at", "2017-09-14 20:39:01.568637"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddressing Load (0.1ms)[0m  [1m[34mSELECT  "addressings".* FROM "addressings" WHERE "addressings"."addressable_id" = ? AND "addressings"."addressable_type" = ? LIMIT ?[0m  [["addressable_id", 1], ["addressable_type", "Account"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAddressing Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "addressings" WHERE "addressings"."address_id" = ? AND "addressings"."addressable_type" = ? AND "addressings"."addressable_id" = ? LIMIT ?[0m  [["address_id", 1], ["addressable_type", "Account"], ["addressable_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "addressings" ("address_id", "addressable_type", "addressable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["address_id", 1], ["addressable_type", "Account"], ["addressable_id", 1], ["created_at", "2017-09-14 20:39:01.588289"], ["updated_at", "2017-09-14 20:39:01.588289"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 100"], ["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 100"], ["email", "100@contact.com"], ["job_title", "Job 100"], ["created_at", "2017-09-14 20:39:21.855138"], ["updated_at", "2017-09-14 20:39:21.855138"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" IS NULL LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" IS NULL LIMIT ?[0m  [["full_name", "Contact 200"], ["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 200"], ["email", "200@contact.com"], ["created_at", "2017-09-14 20:39:36.062797"], ["updated_at", "2017-09-14 20:39:36.062797"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.3ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" IS NULL AND "contacts"."job_title" IS NULL LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 200"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" IS NULL AND "contacts"."job_title" IS NULL LIMIT ?[0m  [["full_name", "Contact 200"], ["account_id", 1], ["full_name", "Contact 200"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 200"], ["created_at", "2017-09-14 20:40:09.589236"], ["updated_at", "2017-09-14 20:40:09.589236"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" IS NULL AND "contacts"."job_title" IS NULL LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 300"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" IS NULL AND "contacts"."job_title" IS NULL LIMIT ?[0m  [["full_name", "Contact 300"], ["account_id", 1], ["full_name", "Contact 300"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 300"], ["created_at", "2017-09-14 20:40:23.676695"], ["updated_at", "2017-09-14 20:40:23.676695"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" IS NULL LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 300"], ["email", "happy"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" IS NULL LIMIT ?[0m  [["full_name", "Contact 300"], ["account_id", 1], ["full_name", "Contact 300"], ["email", "happy"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 300"], ["email", "happy"], ["created_at", "2017-09-14 20:40:39.324193"], ["updated_at", "2017-09-14 20:40:39.324193"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 300"], ["email", "happy"], ["job_title", "yes"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 300"], ["account_id", 1], ["full_name", "Contact 300"], ["email", "happy"], ["job_title", "yes"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 300"], ["email", "happy"], ["job_title", "yes"], ["created_at", "2017-09-14 20:40:54.955754"], ["updated_at", "2017-09-14 20:40:54.955754"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 300"], ["email", "happy"], ["job_title", "yes"], ["LIMIT", 1]]
+  [1m[36mContact Load (0.2ms)[0m  [1m[34mSELECT  "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["account_id", 1], ["full_name", "Contact 300"], ["email", "happy"], ["job_title", "no"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAccount Load (0.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContact Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 300"], ["account_id", 1], ["full_name", "Contact 300"], ["email", "happy"], ["job_title", "no"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contacts" ("account_id", "full_name", "email", "job_title", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["account_id", 1], ["full_name", "Contact 300"], ["email", "happy"], ["job_title", "no"], ["created_at", "2017-09-14 20:41:18.394447"], ["updated_at", "2017-09-14 20:41:18.394447"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mContact Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "contacts" WHERE LOWER("contacts"."full_name") = LOWER(?) AND ("contacts"."id" != ?) AND "contacts"."account_id" = ? AND "contacts"."full_name" = ? AND "contacts"."email" = ? AND "contacts"."job_title" = ? LIMIT ?[0m  [["full_name", "Contact 300"], ["id", 7], ["account_id", 1], ["full_name", "Contact 300"], ["email", "great"], ["job_title", "no"], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "contacts" SET "email" = ?, "updated_at" = ? WHERE "contacts"."id" = ?[0m  [["email", "great"], ["updated_at", "2017-09-14 20:41:56.546934"], ["id", 7]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUrl Load (0.3ms)[0m  [1m[34mSELECT  "urls".* FROM "urls" INNER JOIN "urlings" ON "urls"."id" = "urlings"."url_id" WHERE "urlings"."urlable_id" = ? AND "urlings"."urlable_type" = ? LIMIT ?[0m  [["urlable_id", 1], ["urlable_type", "Account"], ["LIMIT", 1]]
+  [1m[36mContact Load (0.4ms)[0m  [1m[34mSELECT "contacts".* FROM "contacts" WHERE "contacts"."account_id" = ?[0m  [["account_id", 1]]

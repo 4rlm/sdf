@@ -53,8 +53,9 @@ Contact
   -Contact
     belongs_to :account
 
-    validates :cont_num, uniqueness: true
-    validates :full_name, :uniqueness => { :scope => [:full_name, :cont_num, :email, :job_title] } #=> ALSO IN MIGRATION!
+    validates :full_name, presence: true, case_sensitive: false
+    validates_uniqueness_of :cont_num, allow_blank: true, allow_nil: true
+    validates_uniqueness_of :full_name, allow_blank: true, allow_nil: true, :scope => [:account_id, :full_name, :email, :job_title], case_sensitive: false
 
     has_many :phonings, as: :phonable
     has_many :phones, through: :phonings
@@ -146,8 +147,7 @@ Urling.all
 Address.all
 Addressing.all
 
----------------
-
+--------------- IMPORTANT !!!
 
 
 Contact.new(account_id: 1, full_name: "Gwangbae Kim").save
@@ -158,6 +158,49 @@ act.contacts.first.full_name
 
 cont = Contact.where(full_name: "Gwangbae Kim").first
 cont.account.act_name
+-----
+
+act = Account.find(1)
+act.contacts.build(full_name: "Master of Lorem Ipsum").save
+act.contacts.first.full_name
+----------------------------
+user.profiles.build(name: "Master of Lorem Ipsum").save
+user.profiles.first.name
+
+------
+:account_id, :full_name, :email, :job_title
+
+account_id = 1
+full_name = 'Contact 100'
+email = '100@contact.com'
+job_title = 'Job 100'
+
+cont = Contact.find_or_create_by(account_id: account_id, full_name: full_name, email: email, job_title: job_title)
+cont.phones << Phone.find_or_create_by(phone: phone_raw)
+----------------------
+account_id = 1
+full_name = 'Contact 200'
+email = '200@contact.com'
+job_title = 'Job 600'
+----------------------
+account_id = 1
+full_name = nil
+email = 'www.800.com'
+job_title = 'Job 800'
+
+cont = Contact.find_or_create_by(account_id: account_id, full_name: full_name, email: email, job_title: job_title)
+
+======
+validates_uniqueness_of :acronym, :allow_blank => true, :scope => [:group_id], :case_sensitive => false
+
+
+
+
+
+
+
+
+------
 
 
 
