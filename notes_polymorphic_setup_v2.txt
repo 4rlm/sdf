@@ -179,9 +179,9 @@ cont = Contact.find_or_create_by(account_id: account_id, full_name: full_name, e
 cont.phones << Phone.find_or_create_by(phone: phone_raw)
 ----------------------
 account_id = 1
-full_name = 'Contact 200'
-email = '200@contact.com'
-job_title = 'Job 600'
+full_name = 'Contact 300'
+email = 'happy'
+job_title = 'no'
 ----------------------
 account_id = 1
 full_name = nil
