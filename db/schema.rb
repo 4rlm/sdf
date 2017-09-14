@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20170913194055) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cont_num"], name: "index_contacts_on_cont_num", unique: true
-    t.index ["full_name", "cont_num", "email", "job_title"], name: "contact_index", unique: true
+    t.index ["full_name", "email", "job_title"], name: "contact_index", unique: true
   end
 
   create_table "phones", force: :cascade do |t|

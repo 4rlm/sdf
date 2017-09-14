@@ -14,6 +14,8 @@ class CreateContacts < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-    add_index :contacts, [:full_name, :cont_num, :email, :job_title], unique: true, name: 'contact_index' #=> And in Model!
+    add_index :contacts, [:full_name, :email, :job_title], unique: true, name: 'contact_index' #=> And in Model!
+
+    # add_index :contacts, [:full_name, :cont_num, :email, :job_title], unique: true, name: 'contact_index' #=> And in Model!
   end
 end

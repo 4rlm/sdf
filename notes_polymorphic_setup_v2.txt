@@ -1,3 +1,123 @@
+############## NEW BELOW (POLY MIXED) ##############
+
+
+======================================
+6) SCAFFOLD
+======================================
+Question: Will it belong to more than one table/model?
+
+Account----
+  Account crm_account_id source status act_name
+  > has_many: contacts
+  > has_one: address
+  > has_many: phones
+  > has_one: url
+
+Contact----
+  Contact crm_contact_id source status full_name first_name last_name email job_title
+  > belongs_to: account
+
+Address----(poly)
+  Address status street city state zip full pin
+  Addressing
+
+Phone----(poly)
+  Phone status phone
+  Phoning
+
+Url----(poly)
+  Url status url
+  Urling
+
+
+======================================
+7) MODEL CLASSES
+======================================
+
+Account
+  -Account
+    validates :act_num, uniqueness: true
+    has_many :accountings
+
+    # has_many :cont_nums, through: :accountings, source: :accountable, source_type: :Contact
+    has_many :contacts, through: :accountings, source: :accountable, source_type: :Contact
+      #######################
+
+    has_one :addressing, as: :addressable
+    has_one :address, through: :addressing
+
+    has_many :phonings, as: :phonable
+    has_many :phones, through: :phonings
+
+    has_one :urling, as: :urlable
+    has_one :url, through: :urling
+
+  -Accounting
+    belongs_to :accountable, polymorphic: true
+    belongs_to :account
+
+    validates :account_id, :uniqueness => { :scope => [:accountable_type, :accountable_id] } #=> ALSO IN MIGRATION!
+
+Contact
+  -Contact
+    validates :cont_num, uniqueness: true
+
+    * validates :full_name, :uniqueness => { :scope => [:email, :job_title] } #=> ALSO IN MIGRATION!
+
+    has_many :contactings
+
+    has_many :phonings, as: :phonable
+    has_many :phones, through: :phonings
+
+    has_one :accounting, as: :accountable
+    has_one :account, through: :accounting
+
+Address
+  -Address
+    validates :full, uniqueness: true
+
+    has_many :addressings
+    has_many :act_nums, through: :addressings, source: :addressable, source_type: :Account
+
+  -Addressing
+    belongs_to :addressable, polymorphic: true
+    belongs_to :address
+
+    validates :address_id, :uniqueness => { :scope => [:addressable_type, :addressable_id] } #=> ALSO IN MIGRATION!
+
+Phone
+  -Phone
+    validates :phone, uniqueness: true
+    has_many :phonings
+    has_many :act_nums, through: :phonings, source: :phonable, source_type: :Account
+
+  -Phoning
+    belongs_to :phonable, polymorphic: true
+    belongs_to :phone
+
+    validates :phone_id, :uniqueness => { :scope => [:phonable_type, :phonable_id] } #=> ALSO IN MIGRATION!
+
+Url
+  -Url
+    validates :url, uniqueness: true
+    has_many :urlings
+
+    has_many :act_nums, through: :urlings, source: :urlable, source_type: :Account
+
+  -Urling
+    belongs_to :urlable, polymorphic: true
+    belongs_to :url
+
+    validates :url_id, :uniqueness => { :scope => [:urlable_type, :urlable_id] } #=> ALSO IN MIGRATION!
+
+
+############## NEW ABOVE (POLY MIXED) ##############
+
+
+
+
+
+############## OLD BELOW (polymorphic ONLY)##############
 ==============================================
 Steps to Create Polymorphic Associations for SDF
 Accounts, Contacts, Phones, Addresses, Urls
@@ -113,8 +233,8 @@ Contact----
   $ rails g scaffold Contact cont_num source status full_name first_name last_name email job_title
     t.index :cont_num, unique: true
 
-  (after 1st end)>>
-  add_index :contacts, [:full_name, :cont_num, :email, :job_title], unique: true, name: 'contact_index' #=> And in Model!
+    (after 1st end)>>
+    add_index :contacts, [:full_name, :email, :job_title], unique: true, name: 'contact_index' #=> And in Model!
 
 Address----
   $ rails g scaffold Address status street city state zip full pin
@@ -156,9 +276,10 @@ Url----
 Account
   -Account
     validates :act_num, uniqueness: true
-
     has_many :accountings
-    has_many :cont_nums, through: :accountings, source: :accountable, source_type: :Contact
+
+    # has_many :cont_nums, through: :accountings, source: :accountable, source_type: :Contact
+    has_many :contacts, through: :accountings, source: :accountable, source_type: :Contact
       #######################
 
     has_one :addressing, as: :addressable
@@ -180,7 +301,7 @@ Contact
   -Contact
     validates :cont_num, uniqueness: true
 
-    validates :full_name, :uniqueness => { :scope => [:cont_num, :email, :job_title] } #=> ALSO IN MIGRATION!
+    * validates :full_name, :uniqueness => { :scope => [:email, :job_title] } #=> ALSO IN MIGRATION!
 
     has_many :contactings
 
@@ -189,13 +310,6 @@ Contact
 
     has_one :accounting, as: :accountable
     has_one :account, through: :accounting
-
-  -Contacting
-    belongs_to :contactable, polymorphic: true
-    belongs_to :contact
-
-    validates :contactable_id, uniqueness: true
-    # validates :cont_num_id, :uniqueness => { scope: :cont_numable_id } #=> ALSO IN MIGRATION!
 
 Address
   -Address
@@ -329,6 +443,11 @@ phone_raw = '303-303-3030'
 cont_num = Contact.find_or_create_by(cont_num: cont_num_raw)
 cont_num.update_attributes(full_name: full_name_raw, email: email_raw, job_title: job_title_raw)
 
+cont = Contact.find_or_create_by(full_name: full_name_raw, email: email_raw, job_title: job_title_raw)
+cont.phones << Phone.find_or_create_by(phone: phone_raw)
+cont.account = act_num
+
+
 cont_num = Contact.find_or_create_by(cont_num: cont_num_raw, full_name: full_name_raw, email: email_raw, job_title: job_title_raw)
 cont_num.phones << Phone.find_or_create_by(phone: phone_raw)
 cont_num.account = act_num
@@ -338,6 +457,110 @@ cont_num = Contact.find_by(cont_num: 'con_100')
 cont_num.account
 act_num = Account.find_by(act_num: 'ac_100')
 ----
+
+
+
+$$$$$$ Special Query Starts $$$$$$
+
+act_name_raw = 'Account 300'
+phone_raw = '300-300-3000'
+url_raw = 'http://www.300.com'
+full_raw = '300 Main St, Austin, TX, 78735'
+
+act = Account.find_or_create_by(act_name: act_name_raw)
+act.phones << Phone.find_or_create_by(phone: phone_raw)
+act.url = Url.find_or_create_by(url: url_raw)
+act.address = Address.find_or_create_by(full: full_raw)
+
+act = Account.find_by(act_num: 'ac_100')
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Y contacts = Contact.includes(:account).all
+Y contacts.first.account.id
+Y Contact.includes(:account).where(accounts: {id: 1}).first
+
+Y Contact.includes(:account).where(accounts: {id: 1}, contacts: {id: 1}).first
+Y Contact.includes(:account).where(accounts: {id: 1}).where(contacts: {id: 1}).first
+
+Y Contact.includes(:account).where(accounts: {id: 1}, contacts: {full_name: 'Contact 100'}).first
+Y Contact.includes(:account).where(accounts: {id: 1}).where(contacts: {full_name: 'Contact 100'}).first
+===============
+
+Y Contact.find_by(full_name: 'Contact 100')
+Y Contact.includes(:account).find_by(full_name: 'Contact 100')
+Y Contact.includes(:account).find_by(accounts: {id: 1})
+
+Y Contact.includes(:account).find_by(accounts: {id: 2}, contacts: {full_name: 'Contact 300'})
+
+
+
+
+
+>> IMPORTANT - HOW ????<<
+contacts = Account.find(1).contacts
+contacts.find_or_create_by(full_name: 'why?')
+>> IMPORTANT <<
+
+contacts = Account.find(1).contacts
+
+
+
+
+why_not? = Contact.includes(:account).find_or_create_by(account: {id: 2}, contact: {full_name: 'Contact 300'})
+
+but_this_does = Account.includes(:contacts).find_or_create_by(accounts: {id: 1}, contact: {full_name: 'Contact 300'})
+
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~
+act_num = Account.find_by(act_num: 'ac_300')
+cont_num_raw = 'con_303'
+full_name_raw = 'Contact 303'
+email_raw = '303@contact.com'
+job_title_raw = 'Job 303'
+phone_raw = '303-303-3030'
+
+
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+===============
+########### Eager Loading ###########
+
+Post.includes(:author, { comments: { author: :gravatar } }).each do |post|
+
+act_num_id = 'ac_100'
+act_name = 'Account 100'
+act_num = ActNum.find_or_create_by(act_num: act_num_id)
+
+act_num = ActNum.includes(:act_name, :url, :phones, :address).where(act_num: 'ac_100')
+act_num = ActNum.includes(:act_numable)
+Address.includes(:addressing)
+ActName.includes(:act_namings)
+Account.includes(:idnums, :phones).where(idnums: {crm_id: 'ac_100'}).where(phones: {phone: '(123) 456-7890'})
+##############################
+
+
+
+======
+
+account_id = cont.account.id #=> 1
+Contact.where
+
+cont = Contact.find_or_create_by(full_name: full_name_raw, email: email_raw, job_title: job_title_raw)
+
+cont = Contact.find_by(full_name: 'Contact 100')
+cont = Contact.find_by(account.id: 1)
+
+
+$$$$$$ Special Query Ends $$$$$$
+
+
+
+
+
 
 ++++++++++ CRAZY BEGINS ++++++++++
 rails c
@@ -589,8 +812,6 @@ ActName.includes(:act_namings)
 Account.includes(:idnums, :phones).where(idnums: {crm_id: 'ac_100'}).where(phones: {phone: '(123) 456-7890'})
 
 ======================================
-
-
 
 ======================================
 5) View Data
