@@ -12,6 +12,11 @@
   <% end %>
 
   <div class="field">
+    <%= form.label :account_id %>
+    <%= form.text_field :account_id, id: :contact_account_id %>
+  </div>
+
+  <div class="field">
     <%= form.label :cont_num %>
     <%= form.text_field :cont_num, id: :contact_cont_num %>
   </div>
@@ -39,6 +44,16 @@
   <div class="field">
     <%= form.label :last_name %>
     <%= form.text_field :last_name, id: :contact_last_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :contact_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :job_title %>
+    <%= form.text_field :job_title, id: :contact_job_title %>
   </div>
 
   <div class="actions">

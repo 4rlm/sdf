@@ -1,34 +1,34 @@
 ############## NEW BELOW (POLY MIXED) ##############
 
-
 ======================================
 6) SCAFFOLD
 ======================================
-Question: Will it belong to more than one table/model?
+Question: Will it belong to more than one thing?
 
-Account----
-  Account crm_account_id source status act_name
-  > has_many: contacts
-  > has_one: address
-  > has_many: phones
-  > has_one: url
+Account----(mixed)
+  $ rails g scaffold Account status act_num:uniq:index
 
-Contact----
-  Contact crm_contact_id source status full_name first_name last_name email job_title
-  > belongs_to: account
+Contact----(non-poly)
+  $ rails g scaffold Contact account:references cont_num:uniq:index source status full_name first_name last_name email job_title
+    add_index :contacts, [:full_name, :cont_num, :email, :job_title], unique: true, name: 'contact_index' #=> And in Model!
 
 Address----(poly)
-  Address status street city state zip full pin
-  Addressing
+  $ rails g scaffold Address status street city state zip full:uniq:index pin
+
+  $ rails g scaffold Addressing address:references{index} addressable:references{polymorphic}:index
+    add_index :addressings, [:addressing_id, :addressable_type, :addressable_id], unique: true, name: 'addressings_index' #=> And in Model!
 
 Phone----(poly)
-  Phone status phone
-  Phoning
+  $ rails g scaffold Phone status phone:uniq:index
+
+  $ rails g scaffold Phoning phone:references{index} phonable:references{polymorphic}:index
+    add_index :phonings, [:phone_id, :phonable_type, :phonable_id], unique: true, name: 'phonings_index' #=> And in Model!  #=> And in Model!
 
 Url----(poly)
-  Url status url
-  Urling
+  $ rails g scaffold Url status url:uniq:index
 
+  $ rails g scaffold Urling url:references{index} urlable:references{polymorphic}:index
+    add_index :urlings, [:url_id, :urlable_type, :urlable_id], unique: true, name: 'urlings_index' #=> And in Model!  #=> And in Model!
 
 ======================================
 7) MODEL CLASSES
@@ -37,11 +37,8 @@ Url----(poly)
 Account
   -Account
     validates :act_num, uniqueness: true
-    has_many :accountings
-
-    # has_many :cont_nums, through: :accountings, source: :accountable, source_type: :Contact
-    has_many :contacts, through: :accountings, source: :accountable, source_type: :Contact
-      #######################
+    has_many :contacts
+    #######################
 
     has_one :addressing, as: :addressable
     has_one :address, through: :addressing
@@ -52,25 +49,15 @@ Account
     has_one :urling, as: :urlable
     has_one :url, through: :urling
 
-  -Accounting
-    belongs_to :accountable, polymorphic: true
-    belongs_to :account
-
-    validates :account_id, :uniqueness => { :scope => [:accountable_type, :accountable_id] } #=> ALSO IN MIGRATION!
-
 Contact
   -Contact
+    belongs_to :account
+
     validates :cont_num, uniqueness: true
-
-    * validates :full_name, :uniqueness => { :scope => [:email, :job_title] } #=> ALSO IN MIGRATION!
-
-    has_many :contactings
+    validates :full_name, :uniqueness => { :scope => [:full_name, :cont_num, :email, :job_title] } #=> ALSO IN MIGRATION!
 
     has_many :phonings, as: :phonable
     has_many :phones, through: :phonings
-
-    has_one :accounting, as: :accountable
-    has_one :account, through: :accounting
 
 Address
   -Address
@@ -111,7 +98,319 @@ Url
     validates :url_id, :uniqueness => { :scope => [:urlable_type, :urlable_id] } #=> ALSO IN MIGRATION!
 
 
+
+
+======================================
+8) Add Data
+======================================
+
+
+
+######## OLD DATA ENTRY BELOW ########
+>>>> Add accounts
+act_num_raw = 'ac_100'
+act_name_raw = 'Account 100'
+phone_raw = '100-100-1000'
+url_raw = 'http://www.100.com'
+full_raw = '100 Main St, Austin, TX, 78735'
+-------------------------------
+act_num_raw = 'ac_200'
+act_name_raw = 'Account 200'
+phone_raw = '200-200-2000'
+url_raw = 'http://www.200.com'
+full_raw = '200 Main St, Austin, TX, 78735'
+-------------------------------
+act_num_raw = 'ac_300'
+act_name_raw = 'Account 300'
+phone_raw = '300-300-3000'
+url_raw = 'http://www.300.com'
+full_raw = '300 Main St, Austin, TX, 78735'
+-------------------------------
+act_num = Account.find_or_create_by(act_num: act_num_raw, act_name: act_name_raw)
+act_num.phones << Phone.find_or_create_by(phone: phone_raw)
+act_num.url = Url.find_or_create_by(url: url_raw)
+act_num.address = Address.find_or_create_by(full: full_raw)
+
+act_num = Account.find_by(act_num: 'ac_100')
+
+==View Data
+Account.all
+Accounting.all
+
+Phone.all
+Phoning.all
+
+Url.all
+Urling.all
+
+Address.all
+Addressing.all
+
+---------------
+
+
+
+Contact.new(account_id: 1, full_name: "Gwangbae Kim").save
+cont = Contact.all.first
+
+act = Account.first
+act.contacts.first.full_name
+
+cont = Contact.where(full_name: "Gwangbae Kim").first
+cont.account.act_name
+
+
+
+>>>> Add Contacts
+-------------------------------
+act_num = Account.find_by(act_num: 'ac_100')
+cont_num_raw = 'con_100'
+full_name_raw = 'Contact 100'
+email_raw = '100@contact.com'
+job_title_raw = 'Job 100'
+phone_raw = '100-100-1000'
+-------------------------------
+act_num = Account.find_by(act_num: 'ac_200')
+cont_num_raw = 'con_200'
+full_name_raw = 'Contact 200'
+email_raw = '200@contact.com'
+job_title_raw = 'Job 200'
+phone_raw = '200-200-2000'
+-------------------------------
+act_num = Account.find_by(act_num: 'ac_300')
+cont_num_raw = 'con_300'
+full_name_raw = 'Contact 300'
+email_raw = '300@contact.com'
+job_title_raw = 'Job 300'
+phone_raw = '300-300-3000'
+-------------------------------
+act_num = Account.find_by(act_num: 'ac_100')
+cont_num_raw = 'con_101'
+full_name_raw = 'Contact 101'
+email_raw = '101@contact.com'
+job_title_raw = 'Job 101'
+phone_raw = '100-101-1010'
+-------------------------------
+act_num = Account.find_by(act_num: 'ac_200')
+cont_num_raw = 'con_202'
+full_name_raw = 'Contact 202'
+email_raw = '202@contact.com'
+job_title_raw = 'Job 202'
+phone_raw = '202-202-2020'
+-------------------------------
+act_num = Account.find_by(act_num: 'ac_300')
+cont_num_raw = 'con_303'
+full_name_raw = 'Contact 303'
+email_raw = '303@contact.com'
+job_title_raw = 'Job 303'
+phone_raw = '303-303-3030'
+
+cont_num = Contact.find_or_create_by(cont_num: cont_num_raw)
+cont_num.update_attributes(full_name: full_name_raw, email: email_raw, job_title: job_title_raw)
+
+cont = Contact.find_or_create_by(cont_num: cont_num_raw, full_name: full_name_raw, email: email_raw, job_title: job_title_raw)
+cont.phones << Phone.find_or_create_by(phone: phone_raw)
+cont.account_id = act_num
+
+
+cont_num = Contact.find_or_create_by(cont_num: cont_num_raw, full_name: full_name_raw, email: email_raw, job_title: job_title_raw)
+cont_num.phones << Phone.find_or_create_by(phone: phone_raw)
+cont_num.account = act_num
+
+----
+cont_num = Contact.find_by(cont_num: 'con_100')
+cont_num.account
+act_num = Account.find_by(act_num: 'ac_100')
+----
+
+
+
+$$$$$$ Special Query Starts $$$$$$
+
+act_name_raw = 'Account 300'
+phone_raw = '300-300-3000'
+url_raw = 'http://www.300.com'
+full_raw = '300 Main St, Austin, TX, 78735'
+
+act = Account.find_or_create_by(act_name: act_name_raw)
+act.phones << Phone.find_or_create_by(phone: phone_raw)
+act.url = Url.find_or_create_by(url: url_raw)
+act.address = Address.find_or_create_by(full: full_raw)
+
+act = Account.find_by(act_num: 'ac_100')
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Y contacts = Contact.includes(:account).all
+Y contacts.first.account.id
+Y Contact.includes(:account).where(accounts: {id: 1}).first
+
+Y Contact.includes(:account).where(accounts: {id: 1}, contacts: {id: 1}).first
+Y Contact.includes(:account).where(accounts: {id: 1}).where(contacts: {id: 1}).first
+
+Y Contact.includes(:account).where(accounts: {id: 1}, contacts: {full_name: 'Contact 100'}).first
+Y Contact.includes(:account).where(accounts: {id: 1}).where(contacts: {full_name: 'Contact 100'}).first
+===============
+
+Y Contact.find_by(full_name: 'Contact 100')
+Y Contact.includes(:account).find_by(full_name: 'Contact 100')
+Y Contact.includes(:account).find_by(accounts: {id: 1})
+
+Y Contact.includes(:account).find_by(accounts: {id: 2}, contacts: {full_name: 'Contact 300'})
+
+
+
+
+
+>> IMPORTANT - HOW ????<<
+contacts = Account.find(1).contacts
+contacts.find_or_create_by(full_name: 'why?')
+>> IMPORTANT <<
+
+contacts = Account.find(1).contacts
+
+
+
+
+why_not? = Contact.includes(:account).find_or_create_by(account: {id: 2}, contact: {full_name: 'Contact 300'})
+
+but_this_does = Account.includes(:contacts).find_or_create_by(accounts: {id: 1}, contact: {full_name: 'Contact 300'})
+
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~
+act_num = Account.find_by(act_num: 'ac_300')
+cont_num_raw = 'con_303'
+full_name_raw = 'Contact 303'
+email_raw = '303@contact.com'
+job_title_raw = 'Job 303'
+phone_raw = '303-303-3030'
+
+
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+===============
+########### Eager Loading ###########
+
+Post.includes(:author, { comments: { author: :gravatar } }).each do |post|
+
+act_num_id = 'ac_100'
+act_name = 'Account 100'
+act_num = ActNum.find_or_create_by(act_num: act_num_id)
+
+act_num = ActNum.includes(:act_name, :url, :phones, :address).where(act_num: 'ac_100')
+act_num = ActNum.includes(:act_numable)
+Address.includes(:addressing)
+ActName.includes(:act_namings)
+Account.includes(:idnums, :phones).where(idnums: {crm_id: 'ac_100'}).where(phones: {phone: '(123) 456-7890'})
+##############################
+
+
+
+======
+
+account_id = cont.account.id #=> 1
+Contact.where
+
+cont = Contact.find_or_create_by(full_name: full_name_raw, email: email_raw, job_title: job_title_raw)
+
+cont = Contact.find_by(full_name: 'Contact 100')
+cont = Contact.find_by(account.id: 1)
+
+
+$$$$$$ Special Query Ends $$$$$$
+
+
+
+
+
+
+++++++++++ CRAZY BEGINS ++++++++++
+rails c
+Hirb.enable
+
+-----
+act = Account.all.first
+act.cont_nums
+
+cont = Contact.all.first
+cont.account
+
+
+----- crazy...
+act_num_raw = 'ac_100'
+act_name_raw = 'Account 100'
+url_raw = 'http://www.100.com'
+full_raw = '100 Main St, Austin, TX, 78735'
+
+act_num = Account.find_or_create_by(act_num: act_num_raw, act_name: act_name_raw)
+act_num.url = Url.find_or_create_by(url: url_raw)
+act_num.address = Address.find_or_create_by(full: full_raw)
+
+cont_num_raw = 'con_100'
+full_name_raw = 'Contact 100'
+phone_raw = '100-100-1000'
+
+cont_num = Contact.find_or_create_by(cont_num: cont_num_raw, full_name: full_name_raw)
+cont_num.phones << Phone.find_or_create_by(phone: phone_raw)
+
+
+act_num.address
+act_num.cont_nums << cont_num
+act_num.cont_nums |>> no such column: accountings.account_id
+
+------ still crazy...
+
+cont_num.phones
+cont_num.account = act_num
+cont_num.account |>> no such column: accountings.account_id
+
+
++++++++++++ CRAZY ENDS +++++++++++
+
+
+
+==View Data
+Account.all
+Accounting.all
+
+Phone.all
+Phoning.all
+
+
+
+
+
 ############## NEW ABOVE (POLY MIXED) ##############
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

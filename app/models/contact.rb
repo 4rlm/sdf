@@ -1,15 +1,9 @@
 class Contact < ApplicationRecord
-  validates :cont_num, uniqueness: true
+  belongs_to :account
 
-  validates :full_name, :uniqueness => { :scope => [:email, :job_title] } #=> ALSO IN MIGRATION!
-
-  # validates :full_name, :uniqueness => { :scope => [:cont_num, :email, :job_title] } #=> ALSO IN MIGRATION!
-
-  has_many :contactings
+  # validates :cont_num, uniqueness: true
+  # validates :full_name, :uniqueness => { :scope => [:full_name, :cont_num, :email, :job_title] } #=> ALSO IN MIGRATION!
 
   has_many :phonings, as: :phonable
   has_many :phones, through: :phonings
-
-  has_one :accounting, as: :accountable
-  has_one :account, through: :accounting
 end

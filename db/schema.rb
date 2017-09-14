@@ -10,18 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170913194055) do
-
-  create_table "accountings", force: :cascade do |t|
-    t.integer "account_id"
-    t.string "accountable_type"
-    t.integer "accountable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_accountings_on_account_id"
-    t.index ["accountable_type", "accountable_id"], name: "index_accountings_on_accountable_type_and_accountable_id"
-    t.index [nil, "accountable_type", "accountable_id"], name: "accountings_index", unique: true
-  end
+ActiveRecord::Schema.define(version: 20170914173000) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "act_num"
@@ -58,6 +47,7 @@ ActiveRecord::Schema.define(version: 20170913194055) do
   end
 
   create_table "contacts", force: :cascade do |t|
+    t.integer "account_id"
     t.string "cont_num"
     t.string "source"
     t.string "status"
@@ -68,8 +58,7 @@ ActiveRecord::Schema.define(version: 20170913194055) do
     t.string "job_title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cont_num"], name: "index_contacts_on_cont_num", unique: true
-    t.index ["full_name", "email", "job_title"], name: "contact_index", unique: true
+    t.index ["account_id"], name: "index_contacts_on_account_id"
   end
 
   create_table "phones", force: :cascade do |t|
