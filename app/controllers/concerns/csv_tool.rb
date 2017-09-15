@@ -28,20 +28,25 @@ module CsvTool
 
   module Import
 
+    def import_csv
+
+    end
+
+    def iterate_csv
+
+    end
+
     def upload_csv
-      model = @model
-      filename = @file_path
-      cols =  model.column_names
 
-      CSV.foreach(filename, headers: true, skip_blanks: true) do |row|
-        valid_hash = validate_hash(cols, row.to_hash)
+      CSV.foreach(@file_path, headers: true, skip_blanks: true) do |row|
+        @valid_hash = validate_hash(@model.column_names, row.to_hash)
 
-        if obj = model.find_by(id: valid_hash["id"])
-          model.record_timestamps = false
-          obj.update_attributes(valid_hash)
+        if obj = @model.find_by(id: @valid_hash["id"])
+          @model.record_timestamps = false
+          obj.update_attributes(@valid_hash)
         else
-          model.record_timestamps = true
-          model.create!(valid_hash)
+          @model.record_timestamps = true
+          @model.create!(@valid_hash)
         end
 
       end
