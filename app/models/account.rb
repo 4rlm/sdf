@@ -1,6 +1,7 @@
 class Account < ApplicationRecord
   validates :act_num, uniqueness: true
   has_many :contacts
+  # accepts_nested_attributes_for :contacts
   #######################
 
   has_one :addressing, as: :addressable
@@ -11,4 +12,10 @@ class Account < ApplicationRecord
 
   has_one :urling, as: :urlable
   has_one :url, through: :urling
+  # accepts_nested_attributes_for :url
+  # accepts_nested_attributes_for :urling
+
+  # accepts_nested_attributes_for :url, reject_if: :all_blank, allow_destroy: true
+  # accepts_nested_attributes_for :contacts, :address, :phones, :url
+  # accepts_nested_attributes_for :avatar, allow_destroy: true
 end

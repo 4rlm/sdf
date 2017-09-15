@@ -49,6 +49,9 @@ Account
     has_one :urling, as: :urlable
     has_one :url, through: :urling
 
+    accepts_nested_attributes_for :contacts, :address, :phones, :url
+    # accepts_nested_attributes_for :avatar, allow_destroy: true
+
 Contact
   -Contact
     belongs_to :account
@@ -59,6 +62,8 @@ Contact
 
     has_many :phonings, as: :phonable
     has_many :phones, through: :phonings
+
+    accepts_nested_attributes_for :phones, allow_destroy: true
 
 Address
   -Address

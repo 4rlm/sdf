@@ -7,4 +7,6 @@ class Contact < ApplicationRecord
 
   has_many :phonings, as: :phonable
   has_many :phones, through: :phonings
+  
+  accepts_nested_attributes_for :phones, allow_destroy: true
 end

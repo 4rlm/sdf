@@ -1,25 +1,28 @@
-id,act_num,source,act_name,status,created_at,updated_at
-1,ac_100,CRM,Account 100,Imported,2017-09-14 20:39:00 UTC,2017-09-14 20:39:00 UTC
-2,ac_101,Web,Account 101,Imported,2017-09-15 10:20:49 UTC,2017-09-15 10:20:49 UTC
-3,ac_102,CRM,Account 102,Imported,2017-09-15 10:20:49 UTC,2017-09-15 10:20:49 UTC
-4,ac_103,Web,Account 103,Imported,2017-09-15 10:20:49 UTC,2017-09-15 10:20:49 UTC
-5,ac_104,CRM,Account 104,Imported,2017-09-15 10:20:49 UTC,2017-09-15 10:20:49 UTC
-6,ac_105,Web,Account 105,Imported,2017-09-15 10:29:29 UTC,2017-09-15 10:29:29 UTC
-7,ac_106,CRM,Account 106,Imported,2017-09-15 10:47:32 UTC,2017-09-15 10:47:32 UTC
-8,ac_107,Web,Account 107,Imported,2017-09-15 10:47:32 UTC,2017-09-15 10:47:32 UTC
-9,ac_108,CRM,Account 108,Imported,2017-09-15 10:47:32 UTC,2017-09-15 10:47:32 UTC
-10,ac_109,Web,Account 109,Imported,2017-09-15 10:47:32 UTC,2017-09-15 10:47:32 UTC
-11,ac_110,CRM,Account 110,Imported,2017-09-15 10:47:32 UTC,2017-09-15 10:47:32 UTC
-12,ac_111,CRM,Account 111,Imported,2017-09-15 10:55:21 UTC,2017-09-15 10:55:21 UTC
-13,ac_112,CRM,Account 112,Imported,2017-09-15 10:55:21 UTC,2017-09-15 10:55:21 UTC
-14,ac_113,CRM,Account 113,Imported,2017-09-15 11:46:04 UTC,2017-09-15 11:46:04 UTC
-15,ac_114,CRM,Account 114,Imported,2017-09-15 11:46:04 UTC,2017-09-15 11:46:04 UTC
-16,ac_115,CRM,Account 115,Imported,2017-09-15 11:46:04 UTC,2017-09-15 11:46:04 UTC
-17,ac_116,CRM,Account 116,Imported,2017-09-15 12:23:55 UTC,2017-09-15 12:23:55 UTC
-18,ac_117,CRM,Account 117,Imported,2017-09-15 12:23:55 UTC,2017-09-15 12:23:55 UTC
-19,ac_118,CRM,Account 118,Imported,2017-09-15 12:23:55 UTC,2017-09-15 12:23:55 UTC
-20,ac_119,CRM,Account 119,Imported,2017-09-15 12:23:55 UTC,2017-09-15 12:23:55 UTC
-21,ac_120,CRM,Account 120,Imported,2017-09-15 12:27:23 UTC,2017-09-15 12:27:23 UTC
-22,ac_121,CRM,Account 121,Imported,2017-09-15 12:27:23 UTC,2017-09-15 12:27:23 UTC
-23,ac_122,CRM,Account 122,Imported,2017-09-15 12:27:23 UTC,2017-09-15 12:27:23 UTC
-24,ac_123,CRM,Account 123,Imported,2017-09-15 12:27:23 UTC,2017-09-15 12:27:23 UTC
+id,act_num,source,act_name,status,url,phone
+1,ac_100,CRM,Account 100,Imported,http://www.100.com,(100) 100-1000
+2,ac_101,Web,Account 101,Imported,http://www.101.com,(101) 101-1001
+3,ac_102,CRM,Account 102,Imported,http://www.102.com,(102) 102-1002
+4,ac_103,Web,Account 103,Imported,http://www.103.com,(103) 103-1003
+5,ac_104,CRM,Account 104,Imported,http://www.104.com,(104) 104-1004
+6,ac_105,Web,Account 105,Imported,http://www.105.com,(105) 105-1005
+7,ac_106,CRM,Account 106,Imported,http://www.106.com,(106) 106-1006
+8,ac_107,Web,Account 107,Imported,http://www.107.com,(107) 107-1007
+9,ac_108,CRM,Account 108,Imported,http://www.108.com,(108) 108-1008
+10,ac_109,Web,Account 109,Imported,http://www.109.com,(109) 109-1009
+11,ac_110,CRM,Account 110,Imported,http://www.110.com,(110) 110-1010
+12,ac_111,CRM,Account 111,Imported,http://www.111.com,(111) 111-1011
+13,ac_112,CRM,Account 112,Imported,http://www.112.com,(112) 112-1012
+14,ac_113,CRM,Account 113,Imported,http://www.113.com,(113) 113-1013
+15,ac_114,CRM,Account 114,Imported,http://www.114.com,(114) 114-1014
+16,ac_115,CRM,Account 115,Imported,http://www.115.com,(115) 115-1015
+17,ac_116,CRM,Account 116,Imported,http://www.116.com,(116) 116-1016
+18,ac_117,CRM,Account 117,Imported,http://www.117.com,(117) 117-1017
+19,ac_118,CRM,Account 118,Imported,http://www.118.com,(118) 118-1018
+20,ac_119,CRM,Account 119,Imported,http://www.119.com,(119) 119-1019
+21,ac_120,CRM,Account 120,Imported,http://www.120.com,(120) 120-1020
+22,ac_121,CRM,Account 121,Imported,http://www.121.com,(121) 121-1021
+23,ac_122,CRM,Account 122,Imported,http://www.122.com,(122) 122-1022
+24,ac_123,CRM,Account 123,Imported,http://www.123.com,(123) 123-1023
+25,ac_124,CRM,Account 124,Imported,http://www.124.com,(124) 124-1024
+26,ac_125,CRM,Account 125,Imported,http://www.125.com,(125) 125-1025
+27,ac_126,CRM,Account 126,Imported,http://www.126.com,(126) 126-1026

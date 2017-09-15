@@ -68,7 +68,18 @@ class AccountsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
+    ### Original Params ###
+    # def account_params
+    #   params.require(:account).permit(:act_num, :source, :act_name, :status)
+    # end
+
     def account_params
-      params.require(:account).permit(:act_num, :source, :act_name, :status)
+      params.require(:account).permit(
+        :act_num, :source, :act_name, :status,
+        contact_attributes: [:account_id, :full_name]
+        # url_attributes: [ :status, :url ],
+        # urling_attributes: [ :url_id, :urlable_type, :urlable_id ]
+      )
     end
+
 end
