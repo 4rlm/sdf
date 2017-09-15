@@ -2,7 +2,9 @@ require 'csv'
 require 'pry'
 ## Call: CsvToolHelper.new(Account).backup_csv
 ## Call: CsvToolHelper.new(Account).download_csv
-## CsvToolHelper.new(Account).upload_csv
+
+## CsvToolHelper.new(Account).import_csv
+## CsvToolHelper.new(Account).iterate_csv
 
 class CsvToolHelper
   include CsvTool::Export
