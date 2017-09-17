@@ -94,8 +94,12 @@ ActiveRecord::Schema.define(version: 20170914173000) do
   end
 
   create_table "urls", force: :cascade do |t|
+    t.boolean "archive", default: false
+    t.integer "redirects_to"
     t.string "status"
     t.string "url"
+    t.string "staff_page"
+    t.string "locations_page"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["url"], name: "index_urls_on_url", unique: true
