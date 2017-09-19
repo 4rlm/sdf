@@ -1,6 +1,3 @@
-/db
-/log
-
 *.rbc
 capybara-*.html
 .rspec
